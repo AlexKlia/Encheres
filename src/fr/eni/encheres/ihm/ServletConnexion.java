@@ -39,7 +39,7 @@ public class ServletConnexion extends HttpServlet {
 		session.setAttribute("identifiant", id);
 		session.setAttribute("mdp", mdp);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/accueil.jsp");
 		rd.forward(request, response);
 
 	}

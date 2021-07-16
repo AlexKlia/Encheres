@@ -20,7 +20,7 @@
 					<label for="text" class="col-sm-4 col-form-label">Mot de
 						passe : </label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" name="mdp" id="mdp" />
+						<input type="password" class="form-control" name="mdp" id="mdp" />
 					</div>
 				</div>
 				<div class="row">

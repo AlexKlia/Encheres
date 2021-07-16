@@ -86,8 +86,8 @@
 						</div>
 			</fieldset>
 			
-			<button class="btn btn-lg btn-primary mr-5">Enregistrer</button>
-			<button class="btn btn-lg btn-danger">Annuler</button>
+			<button class="btn btn-lg btn-outline-dark mr-5">Enregistrer</button>
+			<button class="btn btn-lg btn-outline-danger">Annuler</button>
 			
 		</form>
 	</div>
