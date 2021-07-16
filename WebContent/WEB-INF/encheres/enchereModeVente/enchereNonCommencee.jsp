@@ -1,4 +1,4 @@
-<%@ include file="../entete.jspf" %>
+<%@ include file="../../fragment/entete.jspf" %>
 
 <h1 class="text-center">Nouvelle vente</h1>
 
@@ -93,4 +93,4 @@
 	</div>
 </div>
 
-<%@ include file="../piedDePage.jspf" %>
+<%@ include file="../../fragment/piedDePage.jspf" %>
