@@ -19,6 +19,8 @@ public class TestDAL {
 			utilisateurDAO.insert(u1);
 			System.out.println("Utilisateur ajouté : " + u1.toString());
 
+			Utilisateur user = utilisateurDAO.selectById(u1.getNoUtilisateur());
+			System.out.println("selectById(no_utilisateur) = " + user.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

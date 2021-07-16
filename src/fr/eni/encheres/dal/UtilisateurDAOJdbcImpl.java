@@ -13,11 +13,43 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_ALL = "select * from utilisateurs";
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit,administrateur) values (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String SELECT_IDENTIFIANT = "select * from UTILISATEURS where pseudo=? AND mot_de_passe=?";
+	private static final String SELECT_BY_ID = "select * from UTILISATEURS where no_utilisateur=?";
 
 	@Override
-	public Utilisateur selectById(Utilisateur obj) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+	public Utilisateur selectById(int no_utilisateur) throws DALException {
+		Utilisateur user = null;
+		try (Connection connection = ConnectionProvider.getConnection()) {
+			try {
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+				preparedStatement.setInt(1, no_utilisateur);
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+				  user = new Utilisateur();
+			      user.setPseudo( rs.getString("pseudo"));
+			      user.setNom( rs.getString("nom"));
+			      user.setPrenom( rs.getString("prenom"));
+			      user.setEmail( rs.getString("email"));
+			      user.setTelephone( rs.getString("telephone"));
+			      user.setRue( rs.getString("rue"));
+			      user.setCodePostal( rs.getString("code_postal"));
+			      user.setVille( rs.getString("ville"));
+			      user.setMotDePasse( rs.getString("mot_de_passe"));
+			      user.setCredit( rs.getInt("credit"));
+			      user.setAdministrateur( rs.getBoolean("administrateur"));
+			    }
+				rs.close();                       
+				preparedStatement.close();
+				connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				connection.close();
+				throw e;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		return user;
 	}
 
 	@Override

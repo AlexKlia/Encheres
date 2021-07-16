@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface DAO<T> {
 	//Sélectionner un business object par son id
-	public T selectById(T obj) throws DALException;
+	public T selectById(int i) throws DALException;
 	
 	//Sélectionner tous les business objects 
 	public List<T> selectAll() throws DALException;
