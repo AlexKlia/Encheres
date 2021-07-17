@@ -36,6 +36,8 @@ public class ServletConnexion extends HttpServlet {
 
 		// Creation de la session utilisateur
 		HttpSession session = request.getSession();
+
+		id = "1"; // no_utilisateur, mis en dur pour faire des tests.
 		session.setAttribute("identifiant", id);
 		session.setAttribute("mdp", mdp);
 

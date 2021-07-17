@@ -20,7 +20,12 @@ abstract class ConnectionProvider {
 
 	public static Connection getConnection() throws SQLException {
 		if (con == null || con.isClosed()) {
-			con = DriverManager.getConnection(urldb, userdb, passworddb);
+			try {
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				con = DriverManager.getConnection(urldb, userdb, passworddb);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		return con;
 	}

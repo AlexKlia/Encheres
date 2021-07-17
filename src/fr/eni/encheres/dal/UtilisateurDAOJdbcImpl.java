@@ -4,15 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
-	private static final String SELECT_ALL = "select * from utilisateurs";
+//	private static final String SELECT_ALL = "select * from utilisateurs";
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit,administrateur) values (?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String SELECT_IDENTIFIANT = "select * from UTILISATEURS where pseudo=? AND mot_de_passe=?";
+//	private static final String SELECT_IDENTIFIANT = "select * from UTILISATEURS where pseudo=? AND mot_de_passe=?";
 	private static final String SELECT_BY_ID = "select * from UTILISATEURS where no_utilisateur=?";
 
 	@Override
@@ -25,6 +24,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 				  user = new Utilisateur();
+			      user.setNoUtilisateur( rs.getInt("no_utilisateur"));
 			      user.setPseudo( rs.getString("pseudo"));
 			      user.setNom( rs.getString("nom"));
 			      user.setPrenom( rs.getString("prenom"));
@@ -66,13 +66,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void update(Utilisateur data) throws DALException {
+	public int update(Utilisateur data) throws DALException {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
 
 	@Override
-	public void insert(Utilisateur utilisateur) throws DALException {
+	public int insert(Utilisateur utilisateur) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
 				cnx.setAutoCommit(false);
@@ -97,6 +97,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				rs.close();
 				pstmt.close();
 				cnx.commit();
+				return utilisateur.getNoUtilisateur();
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
@@ -106,6 +107,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e1.printStackTrace();
 
 		}
+		return 0;
 	}
 
 	@Override
