@@ -83,19 +83,50 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public List<Utilisateur> selectIdentifiant() throws DALException {
-		// List<Utilisateur> listeUtilisateurIdentifiant = new ArrayList<Utilisateur>();
-		// try(Connection cnx = ConnectionProvider.getConnection())
-		// {
-		// PreparedStatement pstmt = cnx.prepareStatement(SELECT_IDENTIFIANT);
-		//
-		//
-		// } catch (SQLException e) {
-		//
-		// e.printStackTrace();
-		// }
-		//
-		return null;
+	public Utilisateur selectIdentifiant(Utilisateur utilisateurIdentifier) {
+		Utilisateur u = null;
+		 try(Connection cnx = ConnectionProvider.getConnection())
+		 {
+		 PreparedStatement pstmt = cnx.prepareStatement(SELECT_IDENTIFIANT);
+		 pstmt.setString(1,utilisateurIdentifier.getPseudo());
+		 pstmt.setString(2,utilisateurIdentifier.getMotDePasse());
+		 ResultSet rs = pstmt.executeQuery();
+		 
+		if(rs.next()) {
+			
+			System.out.println("Connexion etablie");
+			u = new Utilisateur (rs.getString("pseudo"),
+					rs.getString("nom"),
+					rs.getString("prenom"),
+					rs.getString("email"),
+					rs.getString("telephone"),
+					rs.getString("rue"),
+					rs.getString("code_postal"),
+					rs.getString("ville"),
+					rs.getString("mot_de_passe"),
+					rs.getInt("credit"),
+					rs.getBoolean("administrateur"));
+			
+			} else {
+				String message = "Le combo pseudo et mdp n'est pas valide";
+				throw new UserNotFoundException(message);
+			}
+
+		
+		 } catch (SQLException e) {
+			 System.out.println("Impossible de se connecter au formulaire");
+		 e.printStackTrace();
+		 }
+		
+		return u;
 	}
+	
+//	private Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
+//		Utilisateur utilisateurCourant;
+//		utilisateurCourant = new Utilisateur();
+//		utilisateurCourant.setPseudo(rs.getString("pseudo"));
+//		// a remplir
+//		return utilisateurCourant;
+//	}
 
 }

@@ -1,6 +1,6 @@
 <%@ include file="../../fragment/entete.jspf"%>
 
-<%-- <p><%=session.getAttribute("identifiant") %></p>
+<%-- <%-- <p><%=session.getAttribute("identifiant") %></p>
 <p><%=session.getAttribute("mdp") %></p> --%>
 
 <div class="d-flex justify-content-center align-items-center container ">
