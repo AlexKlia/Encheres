@@ -66,18 +66,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public int update(Utilisateur data) throws DALException {
+	public Utilisateur update(Utilisateur data) throws DALException {
 		// TODO Auto-generated method stub
-		return 0;
+		return data;
 	}
 
 	@Override
-	public int insert(Utilisateur utilisateur) throws DALException {
+	public Utilisateur insert(Utilisateur utilisateur) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR,
-						PreparedStatement.RETURN_GENERATED_KEYS);
+				PreparedStatement.RETURN_GENERATED_KEYS);
 				pstmt.setString(1, utilisateur.getPseudo());
 				pstmt.setString(2, utilisateur.getNom());
 				pstmt.setString(3, utilisateur.getPrenom());
@@ -97,7 +97,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				rs.close();
 				pstmt.close();
 				cnx.commit();
-				return utilisateur.getNoUtilisateur();
+				return utilisateur;
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
@@ -107,12 +107,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e1.printStackTrace();
 
 		}
-		return 0;
+		return utilisateur;
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
+		
 
 	}
 

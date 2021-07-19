@@ -40,7 +40,7 @@
 						<input type="checkbox" id="rememberme" name="rememberme">
 						<label for="rememberme">Se souvenir de moi</label>
 						<div>
-							<a href="">Mot de passe oubliï¿½</a>
+							<a href="">Mot de passe oublié</a>
 						</div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
 		<div class="container">
 			<div class="row mt-5">
 				<div class="col-12">
-					<button class="btn-height col-sm-12 btn btn-outline-dark btn-lg">Crï¿½er
+					<button class="btn-height col-sm-12 btn btn-outline-dark btn-lg">Créer
 						un compte</button>
 				</div>
 				<div class="container">
