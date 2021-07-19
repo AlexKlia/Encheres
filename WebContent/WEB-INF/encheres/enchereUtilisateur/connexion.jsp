@@ -40,7 +40,7 @@
 						<input type="checkbox" id="rememberme" name="rememberme">
 						<label for="rememberme">Se souvenir de moi</label>
 						<div>
-							<a href="">Mot de passe oublié</a>
+							<a href="">Mot de passe oubliï¿½</a>
 						</div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
 		<div class="container">
 			<div class="row mt-5">
 				<div class="col-12">
-					<button class="btn-height col-sm-12 btn btn-outline-dark btn-lg">Créer
+					<button class="btn-height col-sm-12 btn btn-outline-dark btn-lg">Crï¿½er
 						un compte</button>
 				</div>
 				<div class="container">
@@ -64,5 +64,5 @@
 
 	</div>
 </div>
-</div>
+
 <%@ include file="../../fragment/piedDePage.jspf"%>

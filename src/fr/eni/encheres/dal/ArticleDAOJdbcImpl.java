@@ -13,11 +13,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
 	private static final String SELECT_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
+	private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
 	
 	@Override
 	public Article selectById(int id) throws DALException {
 		Article article = null;
-		System.out.println(id);
 		try (Connection connection = ConnectionProvider.getConnection()) {
 			try {
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
@@ -132,8 +132,21 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void delete(Article obj) throws DALException {
-		// TODO Auto-generated method stub
-		
+	public void delete(int id) throws DALException {
+		try (Connection connection = ConnectionProvider.getConnection()) {
+			try {
+				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+				preparedStatement.setInt(1, id);
+				preparedStatement.execute();
+				preparedStatement.close();
+				connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				connection.close();
+				throw e;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
 }

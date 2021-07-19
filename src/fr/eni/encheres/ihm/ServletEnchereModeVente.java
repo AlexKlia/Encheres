@@ -34,11 +34,12 @@ public class ServletEnchereModeVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if (null == session.getAttribute("identifiant") || session.getAttribute("identifiant").equals("")) {
+		Object id = session.getAttribute("identifiant");
+		if (null ==  id || id.equals("")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/connexion.jsp");
 			rd.forward(request, response);
 		} else {
-			int userId = Integer.parseInt(session.getAttribute("identifiant").toString());
+			int userId = Integer.parseInt(id.toString());
 
 			try {
 				if (null == user) {
@@ -62,7 +63,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 				if (null != user) {
 					// Informations user
 					request.setAttribute("rue", user.getRue());
-					request.setAttribute("code_postal", String.valueOf(user.getCodePostal()));
+					request.setAttribute("codePostal", String.valueOf(user.getCodePostal()));
 					request.setAttribute("ville", user.getVille());
 				}
 			} catch (DALException e) {
@@ -80,58 +81,88 @@ public class ServletEnchereModeVente extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Article article = null;
 		String requestNoArticle = request.getParameter("noArticle");
-		if (null != requestNoArticle && !requestNoArticle.equals("")) {
+		boolean isDeleteButton = request.getParameter("submitButton").equals("delete");
+		boolean isCancelButton = request.getParameter("submitButton").equals("cancel");
+		boolean articleAlreadyExist = null != requestNoArticle && !requestNoArticle.equals("");
+		
+		// On verifie l'action qu'on veux effectuer: suppression, ajout ou modification.
+		if (isDeleteButton && articleAlreadyExist) {
+			// Suppression de l'article
 			try {
-				article = am.getArticleById(Integer.parseInt(requestNoArticle));
+				am.remove(Integer.parseInt(requestNoArticle));
+				request.setAttribute("deleteSuccess", true);
+				request.setAttribute("alertClass", "info");
 			} catch (NumberFormatException | DALException e) {
 				e.printStackTrace();
 			}
 		} else {
-			article = new Article();
-		}
-		
-		article.setNomArticle(request.getParameter("article"));
-		article.setDescription(request.getParameter("description"));
-		
-		if (null != request.getParameter("miseAPrix")) {
-			article.setMiseAPrix(Integer.parseInt(request.getParameter("miseAPrix")));	
-		}
-		
-		Categorie categorie = new Categorie();
-		categorie.setNoCategorie(Integer.parseInt(request.getParameter("categorie")));
-		article.setCategorie(categorie);
-		
-		String debutEnchere = request.getParameter("debutEnchere");
-		if (null != debutEnchere) {
-			article.setDateDebutEncheres(LocalDate.parse(debutEnchere));
-		}
-
-		String finEnchere = request.getParameter("finEnchere");
-		if (null != finEnchere) {
-			article.setDateFinEncheres(LocalDate.parse(finEnchere));
-		}
-		
-		Retrait retrait = new Retrait();
-		retrait.setRue(request.getParameter("rue"));
-		retrait.setCodePostal(request.getParameter("codePostal"));
-		retrait.setVille(request.getParameter("ville"));
-		
-		article.setRetrait(retrait);
-		article.setVendeur(user);
-
-		try {
-			if (null != article) {
-				int noArticle;
-				if (null != article.getNoArticle()) {
-					noArticle = am.update(article);
-				} else {
-					noArticle = am.add(article);
+			// On recherche l'article si un id est passé en parametre de la requete pour le mettre a jour
+			if (articleAlreadyExist) {
+				try {
+					article = am.getArticleById(Integer.parseInt(requestNoArticle));
+				} catch (NumberFormatException | DALException e) {
+					e.printStackTrace();
+				}
+			} else {
+				// Sinon on ajoute un nouvelle article
+				article = new Article();
+			}
+			
+			// Dans le cas du clic sur le boutton "Annuler", le traitement est terminé.
+			if (!isCancelButton) {
+				article.setNomArticle(request.getParameter("article"));
+				article.setDescription(request.getParameter("description"));
+				
+				if (null != request.getParameter("miseAPrix")) {
+					article.setMiseAPrix(Integer.parseInt(request.getParameter("miseAPrix")));	
+				}
+				
+				Categorie categorie = new Categorie();
+				categorie.setNoCategorie(Integer.parseInt(request.getParameter("categorie")));
+				article.setCategorie(categorie);
+				
+				String debutEnchere = request.getParameter("debutEnchere");
+				if (null != debutEnchere) {
+					article.setDateDebutEncheres(LocalDate.parse(debutEnchere));
 				}
 
-				request.setAttribute("noArticle", noArticle);
+				String finEnchere = request.getParameter("finEnchere");
+				if (null != finEnchere) {
+					article.setDateFinEncheres(LocalDate.parse(finEnchere));
+				}
+				
+				Retrait retrait = new Retrait();
+				retrait.setRue(request.getParameter("rue"));
+				retrait.setCodePostal(request.getParameter("codePostal"));
+				retrait.setVille(request.getParameter("ville"));
+				
+				article.setRetrait(retrait);
+				article.setVendeur(user);
 			}
-		} catch (DALException e) {
-			e.printStackTrace();
+			
+			try {
+				Integer noArticle;
+				if (isCancelButton) {
+					noArticle = null == article ? null : article.getNoArticle();
+					request.setAttribute("cancelSuccess", true);
+					request.setAttribute("alertClass", "warning");
+				} else {
+					request.setAttribute("alertClass", "success");
+					if (null != article.getNoArticle()) {
+						noArticle = am.update(article);
+						request.setAttribute("updateSuccess", true);
+					} else {
+						noArticle = am.add(article);
+						request.setAttribute("addSuccess", true);
+					}
+				}
+				
+				if (null != noArticle) {
+					request.setAttribute("noArticle", noArticle);
+				}
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		doGet(request, response);
