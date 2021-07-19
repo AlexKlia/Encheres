@@ -10,10 +10,10 @@ public interface DAO<T> {
 	public List<T> selectAll() throws DALException;
 	
 	//Modifier les attributs d'un business object
-	public int update(T data) throws DALException;
+	public T update(T data) throws DALException;
 	
 	//Insérer un nouveau business object
-	public int insert(T data) throws DALException;
+	public T insert(T data) throws DALException;
 	
 	//Supprimer un business object
 	public void delete(int id) throws DALException;

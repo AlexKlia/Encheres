@@ -64,7 +64,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public int update(Article article) throws DALException {
+	public Article update(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
 				cnx.setAutoCommit(false);
@@ -83,7 +83,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				pstmt.executeUpdate();
 				pstmt.close();
 				cnx.commit();
-				return article.getNoArticle();
+				return article;
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
@@ -94,11 +94,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		}
 
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int insert(Article article) throws DALException {
+	public Article insert(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
 				cnx.setAutoCommit(false);
@@ -121,7 +121,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				rs.close();
 				pstmt.close();
 				cnx.commit();
-				return article.getNoArticle();
+				return article;
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.rollback();
@@ -131,7 +131,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e1.printStackTrace();
 
 		}
-		return 0;
+
+		return null;
 	}
 
 	@Override
