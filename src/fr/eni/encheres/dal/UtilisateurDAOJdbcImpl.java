@@ -111,7 +111,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void delete(Utilisateur obj) throws DALException {
+	public void delete(int id) throws DALException {
 		// TODO Auto-generated method stub
 
 	}

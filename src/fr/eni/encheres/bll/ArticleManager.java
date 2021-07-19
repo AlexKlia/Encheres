@@ -20,6 +20,10 @@ public class ArticleManager {
 		return articleDAO.update(article);
 	}
 	
+	public void remove(int id) throws DALException {
+		articleDAO.delete(id);
+	}
+	
 	public Article getArticleById(int id) throws DALException {
 		return articleDAO.selectById(id);
 	}
