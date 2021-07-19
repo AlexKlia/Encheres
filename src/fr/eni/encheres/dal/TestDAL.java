@@ -10,44 +10,24 @@ public class TestDAL {
 		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
 
 		//  Instanciation du jeu d'essai
-		 Utilisateur u1 = new Utilisateur("od", "olivier", "durand",
+		 Utilisateur u1 = new Utilisateur("opd", "olivier", "durand",
 		 "olivier@gmail.fr", "0652598789",
 		 "rue de la republique", "84000", "Avignon", "oliv59", 200, true);
-		
-		// System.out.println("Ajout des utilisateurs ");
-		//
-//		 try {
-//		 utilisateurDAO.insert(u1);
-//		 System.out.println("Utilisateur ajouté : " + u1.toString());
-//		
-//		 } catch (DALException e) {
-//		 e.printStackTrace();
-//		 }
 
-		//// List<Utilisateur> articles = articleDAO.selectAll();
-//		Utilisateur utilisateurATester = new Utilisateur();
-//		utilisateurATester.setPseudo("r");
-//		utilisateurATester.setMotDePasse("re");
-//		//
-//		// try {
-//		// utilisateurDAO.selectIdentifiant(utilisateurATester.getPseudo(),
-//		// utilisateurATester.getMotDePasse());
-//		// System.out.println("selection OK");
-//		// } catch (DALException e) {
-//		// e.printStackTrace();
-//		// }
-//		try {
-//			utilisateurDAO.selectIdentifiant(utilisateurATester.getPseudo(), utilisateurATester.getMotDePasse());  
-//			System.out.println("Sélection de l'article par id  : " + utilisateurATester.toString());
-//		} catch (DALException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		try {
-			Utilisateur u = utilisateurDAO.selectIdentifiant(u1);
+
+			
+			Utilisateur u = utilisateurDAO.selectIdentifiant(u1.getPseudo(),u1.getMotDePasse());
 			System.out.println("Sélection de l'article par id  : " + u1.toString() );
+
+			utilisateurDAO.insert(u1);
+			System.out.println("Utilisateur ajouté : " + u1.toString());
+
+			Utilisateur user = utilisateurDAO.selectById(u1.getNoUtilisateur());
+			System.out.println("selectById(no_utilisateur) = " + user.toString());
+
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		}
 		
