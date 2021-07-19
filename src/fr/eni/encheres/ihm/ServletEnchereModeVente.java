@@ -2,6 +2,9 @@ package fr.eni.encheres.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Article;
@@ -34,7 +38,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Object id = session.getAttribute("identifiant");
+		Object id = session.getAttribute("noUtilisateur");
 		if (null ==  id || id.equals("")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/connexion.jsp");
 			rd.forward(request, response);
@@ -113,7 +117,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 				article.setNomArticle(request.getParameter("article"));
 				article.setDescription(request.getParameter("description"));
 				
-				if (null != request.getParameter("miseAPrix")) {
+				if (!request.getParameter("miseAPrix").equals("")) {
 					article.setMiseAPrix(Integer.parseInt(request.getParameter("miseAPrix")));	
 				}
 				
@@ -122,12 +126,12 @@ public class ServletEnchereModeVente extends HttpServlet {
 				article.setCategorie(categorie);
 				
 				String debutEnchere = request.getParameter("debutEnchere");
-				if (null != debutEnchere) {
+				if (!debutEnchere.equals("")) {
 					article.setDateDebutEncheres(LocalDate.parse(debutEnchere));
 				}
 
 				String finEnchere = request.getParameter("finEnchere");
-				if (null != finEnchere) {
+				if (!finEnchere.equals("")) {
 					article.setDateFinEncheres(LocalDate.parse(finEnchere));
 				}
 				
@@ -141,27 +145,30 @@ public class ServletEnchereModeVente extends HttpServlet {
 			}
 			
 			try {
-				Integer noArticle;
 				if (isCancelButton) {
-					noArticle = null == article ? null : article.getNoArticle();
 					request.setAttribute("cancelSuccess", true);
 					request.setAttribute("alertClass", "warning");
 				} else {
 					request.setAttribute("alertClass", "success");
 					if (null != article.getNoArticle()) {
-						noArticle = am.update(article);
+						am.update(article);
 						request.setAttribute("updateSuccess", true);
 					} else {
-						noArticle = am.add(article);
+						am.add(article);
 						request.setAttribute("addSuccess", true);
 					}
 				}
-				
-				if (null != noArticle) {
-					request.setAttribute("noArticle", noArticle);
-				}
+			} catch (BusinessException e) {
+				String[] errorMessages = e.getErrorMessages();
+				request.setAttribute("alertClass", "danger");
+				request.setAttribute("errorMessages", errorMessages);
 			} catch (DALException e) {
 				e.printStackTrace();
+			}
+			
+			Integer noArticle = null == article ? null : article.getNoArticle();
+			if (null != noArticle) {
+				request.setAttribute("noArticle", noArticle);
 			}
 		}
 		

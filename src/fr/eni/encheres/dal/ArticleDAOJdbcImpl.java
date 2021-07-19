@@ -9,6 +9,7 @@ import java.util.List;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
+
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
@@ -73,7 +74,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				pstmt.setString(2, article.getDescription().trim());
 				pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 				pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
-				pstmt.setInt(5, article.getMiseAPrix());
+				int miseAPrix = null == article.getMiseAPrix() ? 0 : article.getMiseAPrix();
+				pstmt.setInt(5, miseAPrix);
 				pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
 				pstmt.setInt(7, article.getCategorie().getNoCategorie());
 				pstmt.setInt(8, article.getNoArticle());
@@ -106,7 +108,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				pstmt.setString(2, article.getDescription().trim());
 				pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 				pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
-				pstmt.setInt(5, article.getMiseAPrix());
+				int miseAPrix = null == article.getMiseAPrix() ? 0 : article.getMiseAPrix();
+				pstmt.setInt(5, miseAPrix);
 				pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
 				pstmt.setInt(7, article.getCategorie().getNoCategorie());
 

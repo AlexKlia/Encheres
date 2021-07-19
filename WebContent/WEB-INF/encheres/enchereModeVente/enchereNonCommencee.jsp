@@ -12,13 +12,14 @@
 	String debut = (String) request.getAttribute("debut");
 	String fin = (String) request.getAttribute("fin");
 	String id = (String) request.getAttribute("id");
+	String errorMessages[] = (String[]) request.getAttribute("errorMessages");
 	String alertClass = (String) request.getAttribute("alertClass");
 	Boolean deleteSuccess = (Boolean) request.getAttribute("deleteSuccess");
 	Boolean addSuccess = (Boolean) request.getAttribute("addSuccess");
 	Boolean updateSuccess = (Boolean) request.getAttribute("updateSuccess");
 %>
 
-<c:if test="${deleteSuccess || addSuccess || updateSuccess || cancelSuccess}">
+<c:if test="${deleteSuccess || addSuccess || updateSuccess || cancelSuccess || null != errorMessages}">
 	<div class="row justify-content-md-center">
 		<div class="col col-lg-6 text-center font-weight-bold">
 			<div class="alert alert-${alertClass}" role="alert">
@@ -31,10 +32,18 @@
 					  	La vente à était crée avec succès.
 			        </c:when>
 			        
+			        <c:when test="${null != errorMessages}">
+			        	<ul class="list-unstyled">
+						  	<c:forEach var="var" items="${errorMessages}">
+						  		<li>${var}</li>
+							</c:forEach>
+						</ul>
+			        </c:when>
+			        
 			        <c:when test="${updateSuccess}">
 					  	La vente à était modifiée avec succès.
 			        </c:when>
-			         
+												
 			        <c:otherwise>
 						Les modifications ont était annulé.
 			        </c:otherwise>

@@ -129,7 +129,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		if(rs.next()) {
 			
 			System.out.println("Connexion etablie");
-			u = new Utilisateur (rs.getString("pseudo"),
+			u = new Utilisateur (rs.getInt("no_utilisateur"),
+					rs.getString("pseudo"),
 					rs.getString("nom"),
 					rs.getString("prenom"),
 					rs.getString("email"),
