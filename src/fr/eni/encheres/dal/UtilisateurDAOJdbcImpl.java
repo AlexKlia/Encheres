@@ -68,7 +68,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur update(Utilisateur data) throws DALException {
 		// TODO Auto-generated method stub
+
 		return null;
+
 	}
 
 	@Override
@@ -77,7 +79,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			try {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR,
-						PreparedStatement.RETURN_GENERATED_KEYS);
+				PreparedStatement.RETURN_GENERATED_KEYS);
 				pstmt.setString(1, utilisateur.getPseudo());
 				pstmt.setString(2, utilisateur.getNom());
 				pstmt.setString(3, utilisateur.getPrenom());
@@ -107,12 +109,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e1.printStackTrace();
 
 		}
+
 		return null;
+
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -144,7 +148,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			
 			} else {
 				String message = "Le combo pseudo et mdp n'est pas valide";
-//		throw new UserNotFoundException(message);
+
 			}
 
 		
@@ -155,12 +159,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return u;
 	}
 	
-//	private Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
-//		Utilisateur utilisateurCourant;
-//		utilisateurCourant = new Utilisateur();
-//		utilisateurCourant.setPseudo(rs.getString("pseudo"));
-//		// a remplir
-//		return utilisateurCourant;
-//	}
+
 
 }
