@@ -2,6 +2,11 @@ package fr.eni.encheres.bo;
 
 import java.time.LocalDate;
 
+import fr.eni.encheres.dal.ArticleDAO;
+import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.UtilisateurDAO;
+
 public class Enchere {
 
 	private LocalDate dateEnchere;
@@ -14,6 +19,18 @@ public class Enchere {
 		super();
 		this.setAcheteur(acheteur);
 		this.setArticle(article);
+		this.setDateEnchere(dateEnchere);
+		this.setMontantEnchere(montantEnchere);
+	}
+	
+	public Enchere(int acheteurID, int articleID, LocalDate dateEnchere, int montantEnchere) throws DALException {
+		super();
+		UtilisateurDAO utilisteurDAO = DAOFactory.getUtilisateurDAO();
+		this.acheteur = utilisteurDAO.selectById(acheteurID);
+			
+		ArticleDAO articleDAO = DAOFactory.getArticleDAO(); 
+		this.article = articleDAO.selectById(articleID);
+			
 		this.setDateEnchere(dateEnchere);
 		this.setMontantEnchere(montantEnchere);
 	}
