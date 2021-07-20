@@ -7,14 +7,15 @@
 <!-- Déclaration des variables -->
 <%
 	String erreur = (String) request.getAttribute("erreur");
+	
 %>
 
 
 <div class="d-flex justify-content-center align-items-center container ">
-	<div class="row mt-5">
-		<div class="col-12">
-			<form action="<%=request.getContextPath()%>/ServletConnexion"
-				method="post">
+	<form action="<%=request.getContextPath()%>/ServletConnexion"
+		method="post">
+		<div class="row mt-5">
+			<div class="col-12">
 				<div class="form-group row">
 					<label for="text" class="col-sm-4 col-form-label">Identifiant
 						: </label>
@@ -32,9 +33,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-6">
-						<input class="col-sm-12 btn btn-outline-dark
-							btn-lg"
-							type="submit" value="Connexion" />
+						<button type="submit" name="submitButton" value="connexion"
+							class="col-sm-12 btn btn-outline-dark btn-lg">Connexion</button>
 					</div>
 					<div class="col-sm-6 col text-right">
 						<input type="checkbox" id="rememberme" name="rememberme">
@@ -44,25 +44,26 @@
 						</div>
 					</div>
 				</div>
-			</form>
-		</div>
-		<div class="container">
-			<div class="row mt-5">
-				<div class="col-12">
-					<button class="btn-height col-sm-12 btn btn-outline-dark btn-lg">Créer
-						un compte</button>
-				</div>
-				<div class="container">
-					<div class="row mt-5">
+			</div>
+			<div class="container">
+				<div class="row mt-5">
+					<div class="col-12">
+						<button type="submit" name="submitButton" value="add"
+							class="btn-height col-sm-12 btn btn-outline-dark btn-lg">Créer
+							un compte</button>
+					</div>
+					<div class="container">
+						<div class="row mt-5">
 							<div class="text-danger">
 								<c:if test="${erreur!=null }"><%=erreur%></c:if>
 							</div>
+						</div>
 					</div>
+					
 				</div>
 			</div>
 		</div>
-
-	</div>
+	</form>
 </div>
 
 <%@ include file="../../fragment/piedDePage.jspf"%>

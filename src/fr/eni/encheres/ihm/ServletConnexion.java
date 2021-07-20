@@ -31,40 +31,52 @@ public class ServletConnexion extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		boolean isConnexionButton = request.getParameter("submitButton").equals("connexion");
+		boolean isAddButton = request.getParameter("submitButton").equals("add");
+		
+			if (isConnexionButton) {
+				// Recuperation des donnees du formulaire
 
-		// Recuperation des donnees du formulaire
+				String id = request.getParameter("identifiant");
+				String mdp = request.getParameter("mdp");
 
-		String id = request.getParameter("identifiant");
-		String mdp = request.getParameter("mdp");
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
 
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
+				try {
 
-		try {
+					Utilisateur utilisateurConnecte = utilisateurManager.seConnecter(id, mdp);
+					if (utilisateurConnecte != null) {
+						System.out.println(utilisateurConnecte);
 
-			Utilisateur utilisateurConnecte = utilisateurManager.seConnecter(id, mdp);
-			if (utilisateurConnecte != null) {
-				System.out.println(utilisateurConnecte);
+						// Creation de la session utilisateur
+						HttpSession session = request.getSession();
 
-				// Creation de la session utilisateur
-				HttpSession session = request.getSession();
+						session.setAttribute("noUtilisateur", utilisateurConnecte.getNoUtilisateur());
+						session.setAttribute("identifiant", id);
+						session.setAttribute("mdp", mdp);
 
-				session.setAttribute("noUtilisateur", utilisateurConnecte.getNoUtilisateur());
-				session.setAttribute("identifiant", id);
-				session.setAttribute("mdp", mdp);
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
+						rd.forward(request, response);
+					} else {
+						String erreurConnexion = "Identifiant et mot de passe incorrects";
+						System.out.println("Identifiant et mot de passe incorrects");
+						request.setAttribute("erreur", erreurConnexion);
+						RequestDispatcher rd = request
+								.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/connexion.jsp");
+						rd.forward(request, response);
+					}
+				} catch (DALException e) {
+					e.printStackTrace();
+				}
+			}
 
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/accueil.jsp");
-				rd.forward(request, response);
-			} else {
-				String erreurConnexion = "Identifiant et mot de passe incorrects";
-				System.out.println("Identifiant et mot de passe incorrects");
-				request.setAttribute("erreur", erreurConnexion);
+			if (isAddButton) {
 				RequestDispatcher rd = request
-						.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/connexion.jsp");
+						.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/creerCompte.jsp");
 				rd.forward(request, response);
 			}
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
+
+		
 
 	}
 

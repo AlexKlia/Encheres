@@ -1,5 +1,8 @@
 package fr.eni.encheres.bo;
 
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.UtilisateurDAO;
+
 public class Utilisateur {
 	public int noUtilisateur;
 	public String pseudo;
@@ -52,6 +55,21 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 	
+
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse) {
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+	}
+	
+
 	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}

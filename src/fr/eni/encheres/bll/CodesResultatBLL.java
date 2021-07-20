@@ -45,4 +45,41 @@ public class CodesResultatBLL {
 	 *  Echec quand la date de fin de l'article est avant la date de debut.
 	 */
 	public static final int REGLE_ARTICLE_DATE_FIN_BEFORE_DEBUT=20008;
+	
+	
+	public static final int REGLE_UTILISATEUR_PSEUDO_NULL=20009;
+	
+	
+	public static final int REGLE_UTILISATEUR_PSEUDO_ERREUR=20010;
+	
+	public static final int REGLE_UTILISATEUR_NOM_NULL=20011;
+	
+	public static final int REGLE_UTILISATEUR_NOM_ERREUR=20012;
+	
+	public static final int REGLE_UTILISATEUR_PRENOM_NULL=20013;
+	
+	public static final int REGLE_UTILISATEUR_PRENOM_ERREUR=20014;
+	
+	public static final int REGLE_UTILISATEUR_EMAIL_NULL=20015;
+	
+	public static final int REGLE_UTILISATEUR_EMAIL_ERREUR=20016;
+	
+	public static final int REGLE_UTILISATEUR_TEL_ERREUR=20017;
+	
+	public static final int REGLE_UTILISATEUR_RUE_NULL=20018;
+	
+	public static final int REGLE_UTILISATEUR_RUE_ERREUR=20019;
+	
+	public static final int REGLE_UTILISATEUR_CODE_POSTAL_NULL=20020;
+	
+	public static final int REGLE_UTILISATEUR_CODE_POSTAL_ERREUR=20021;
+	
+	public static final int REGLE_UTILISATEUR_VILLE_NULL=20022;
+	
+	public static final int REGLE_UTILISATEUR_VILLE_ERREUR=20023;
+	
+	public static final int REGLE_UTILISATEUR_MOT_DE_PASSE_NULL=20024;
+	
+	public static final int REGLE_UTILISATEUR_MOT_DE_PASSE_ERREUR=20025;
+	
 }

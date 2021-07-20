@@ -22,7 +22,8 @@ public class ArticleManager {
 		
 		if(!exception.hasErreurs())
 		{
-			return articleDAO.insert(article);
+			article = articleDAO.insert(article);
+			return article.getNoArticle();
 		} else {
 			throw exception;
 		}
@@ -34,7 +35,8 @@ public class ArticleManager {
 		
 		if(!exception.hasErreurs())
 		{
-			return articleDAO.update(article);
+			article = articleDAO.update(article);
+			return article.getNoArticle();
 		} else {
 			throw exception;
 		}
