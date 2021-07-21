@@ -48,9 +48,10 @@ public class UtilisateurManager {
 //		}
 }
 
-	public Utilisateur delete(Utilisateur utilisateur) throws DALException {
+	public String delete(Utilisateur utilisateur) throws DALException {
 
-		return utilisateurDAO.delete(utilisateur);
+		utilisateurDAO.deleteByUser(utilisateur);
+		return "utilisateur : "+ utilisateur.getNoUtilisateur()+" bien supprimé";
 
 	}
 

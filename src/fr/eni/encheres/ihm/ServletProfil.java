@@ -61,38 +61,8 @@ public class ServletProfil extends HttpServlet {
 		boolean isCancelButton = request.getParameter("submitButton").equals("cancel");
 
 		if (isUpdateButton) {
-			HttpSession session = request.getSession();
-			Object noUtilisateur = session.getAttribute("noUtilisateur");
-			int noUtilisateurInt = (Integer) noUtilisateur;
-			// Recuperation des donnees du formulaire
-			String pseudo = request.getParameter("pseudo");
-			String nom = request.getParameter("nom");
-			String prenom = request.getParameter("prenom");
-			String email = request.getParameter("email");
-			String tel = request.getParameter("tel");
-			String rue = request.getParameter("rue");
-			String codePostal = request.getParameter("codePostal");
-			String ville = request.getParameter("ville");
-
-			UtilisateurManager utilisateurManager = new UtilisateurManager();
-			Utilisateur utilisateuraModifier = new Utilisateur(noUtilisateurInt, pseudo, nom, prenom, email, tel, rue,
-					codePostal, ville);
-
-			try {
-				utilisateurManager.update(utilisateuraModifier);
-
-			} catch (DALException e) {
-
-				e.printStackTrace();
-			}
-			// //Redirection vers la page listeEnchereConnecte
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
 			rd.forward(request, response);
-
-			// catch (BusinessException e) {
-			//
-			// e.printStackTrace();
-			// }
 		}
 		if (isCancelButton) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");

@@ -145,16 +145,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 
 	@Override
-	public Utilisateur delete(Utilisateur utilisateur) throws DALException {
+	public void deleteByUser(Utilisateur utilisateur) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
-				cnx.setAutoCommit(false);
 				PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);
 				pstmt.setInt(1, utilisateur.getNoUtilisateur());
-				pstmt.execute();
+				pstmt.executeUpdate();
 				pstmt.close();
 				cnx.close();
-				return utilisateur;
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				cnx.close();
@@ -164,7 +163,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e1.printStackTrace();
 		}
 	
-	return null;
 	}
 
 	@Override

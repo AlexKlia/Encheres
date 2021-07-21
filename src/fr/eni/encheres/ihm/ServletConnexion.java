@@ -63,6 +63,8 @@ public class ServletConnexion extends HttpServlet {
 						session.setAttribute("rue", utilisateurConnecte.getRue());
 						session.setAttribute("codePostal", utilisateurConnecte.getCodePostal());
 						session.setAttribute("ville", utilisateurConnecte.getVille());
+						session.setAttribute("mdp", utilisateurConnecte.getMotDePasse());
+						session.setAttribute("credit", utilisateurConnecte.getCredit());
 						//Redirection vers la page listeEnchereConnecte
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
 						rd.forward(request, response);

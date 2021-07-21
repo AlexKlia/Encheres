@@ -19,28 +19,28 @@
 		<label for="text" class="col-sm-4 col-form-label">Pseudo : </label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="pseudo" id="pseudo"
-				maxlength="30" value="${pseudo}" />
+				maxlength="30" value="${pseudo}" readonly />
 		</div>
 	</div>
 	<div class="form-group row">
 		<label for="text" class="col-sm-4 col-form-label">Nom : </label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="nom" id="nom"
-				maxlength="30" value="${nom}"/>
+				maxlength="30" value="${nom}" readonly/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<label for="text" class="col-sm-4 col-form-label">Prénom : </label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="prenom" id="prenom"
-				maxlength="30" value="${prenom}"/>
+				maxlength="30" value="${prenom}" readonly/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<label for="text" class="col-sm-4 col-form-label">Email : </label>
 		<div class="col-sm-8">
 			<input type="email" class="form-control" name="email" id="mail"
-				maxlength="20" value="${email}"/>
+				maxlength="20" value="${email}" readonly/>
 		</div>
 	</div>
 	<div class="form-group row">
@@ -48,14 +48,14 @@
 		</label>
 		<div class="col-sm-8">
 			<input type="tel" class="form-control" name="tel" id="tel"
-				maxlength="15" value="${tel}"/>
+				maxlength="15" value="${tel}" readonly/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<label for="text" class="col-sm-4 col-form-label">Rue : </label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="rue" id="rue"
-				maxlength="30" value="${rue}" />
+				maxlength="30" value="${rue}" readonly/>
 		</div>
 	</div>
 	<div class="form-group row">
@@ -63,14 +63,14 @@
 			: </label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="codePostal"
-				id="codepostal" maxlength="10" value="${codePostal}"/>
+				id="codepostal" maxlength="10" value="${codePostal}" readonly/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<label for="text" class="col-sm-4 col-form-label">Ville : </label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="ville" id="ville"
-				maxlength="30" value="${ville}"/>
+				maxlength="30" value="${ville}" readonly/>
 		</div>
 	</div>
 
