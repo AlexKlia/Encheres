@@ -1,71 +1,84 @@
- 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	
-	<%@include file="../fragment/entete.jspf" %>
-	
-	<h1 class="text-center text-dark">Liste des enchères</h1>
-	
-	<p>Filtres : </p>
-	
-	<form method="get" action="/Encheres/ServletListeEnchereEnCours">
-	<div class="row mt-5">
-	
-	<div class="col">
-	
-	<input type="text" name="recherche" id="recherche" placeholder="Le nom de l'article contient" size="100" maxlength="100" autofocus /> 
-	
-	
-	<label for="categorie">Catégorie : </label>
-	
-	<select name="categorie" size="1"> 
-	    <option value="toutes" selected="selected">Toutes</option> 
-	    <option value="informatique">Informatique</option>
-	    <option value="ameubleument">Ameubleument</option>
-	    <option value="vetement">Vetement</option>
-	    <option value="sportLoisir">Sport&Loisirs</option>
-	</select>
-	<br/>
-		<div class="form-group row">
-		<div class="col-sm-6">
-		
-	<input type="radio" name="mode" value="achats"/>Achats<br/> 
-      
-  
-    <input type="checkbox" name="achats" value="encheresOuvertes"/>enchères ouvertes<br/> 
-    <input type="checkbox" name="achats"  value="mesEncheresOuvertes"/>mes enchères en cours<br/> 
-    <input type="checkbox" name="achats"  value="mesEncheresRemportees"/>mes enchères remportées<br/>
-    </div>
-  </div>
-    <div class="form-group row">
-  <div class="col-sm-6">
+<%@include file="../fragment/entete.jspf"%>
 
-   <input type="radio" name="mode" value="ventes"/>Mes ventes<br/> 
-  
-    <input type="checkbox" name="ventes"  value="ventesEnCours"/>mes ventes en cours<br/>
- 	<input type="checkbox" name="ventes"  value="ventesNonDebutees"/>ventes non debutées<br/> 
-    <input type="checkbox" name="ventes"  value="ventesTerminees"/>ventes terminées<br/>
-  </div>
-    </div>
-</div>
-	<div class="col">
-	<input type="submit" value="Rechercher" />
-	</div>
-	</div>
-	</form>
+<h1 class="text-center text-dark">Liste des enchères</h1>
+
+<h2>Filtres :</h2>
+
+<form action="${request.getContextPath()}/ServletListeEnchereEnCours" method="GET">
 	
-	
+	<div class="row">
+		<div class="col col-sm-6">
+			<div class="form-group row">
+				<div class="col-sm-8"> 
+					<input class="form-control" type="text" name="recherche" id="recherche" placeholder="Le nom de l'article contient" autofocus />
+				</div>
+			</div>
 		
-	
-	
-	
-	// La liste des encheres
-	<br/><br/>
-	${encheres.photoArticle} <br/>
-	${encheres.nomArticle}<br/>
-	Prix : ${encheres.meilleureOffre} point - y a pas encore<br/>
-	Fin de l'enchere : ${encheres.finEnchere}<br/>
-	Vendeur : ${encheres.vendeur} - y a pas encore<br/>
-	
-	
-	
-	
-<%@include file="../fragment/piedDePage.jspf" %>
+			<div class="form-group row">
+				<label class="col-sm-auto col-form-label" for="categorie">Catégorie: </label>
+				<div class="col-sm-6">
+					<select class="form-control" name="categorie">
+						<option value="toutes" selected="selected">Toutes</option>
+						<option value="informatique">Informatique</option>
+						<option value="ameubleument">Ameubleument</option>
+						<option value="vetement">Vetement</option>
+						<option value="sportLoisir">Sport&Loisirs</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="mode" value="achats" id="checkAchat">
+						<label class="form-check-label" for="checkAchat">Achats</label>
+						
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="achats" value="encheresOuvertes" id="encheresOuvertes">
+							<label class="form-check-label" for="encheresOuvertes">Enchères ouvertes</label>
+						</div>
+						
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="achats" value="mesEncheresOuvertes" id="mesEncheresOuvertes">
+							<label class="form-check-label" for="mesEncheresOuvertes">Mes enchères en cours</label>
+						</div>
+						
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="achats" value="mesEncheresRemportees" id="mesEncheresRemportees">
+							<label class="form-check-label" for="mesEncheresRemportees">Mes enchères remportées</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="mode" value="ventes" id="checkVente">
+						<label class="form-check-label" for="checkVente">Mes ventes</label>
+						
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="ventes" value="ventesEnCours" id="ventesEnCours">
+							<label class="form-check-label" for="ventesEnCours">Mes ventes en cours</label>
+						</div>
+						
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="ventes" value="ventesNonDebutees" id="ventesNonDebutees">
+							<label class="form-check-label" for="ventesNonDebutees">Ventes non debutées</label>
+						</div>
+						
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="ventes" value="ventesTerminees" id="ventesTerminees">
+							<label class="form-check-label" for="ventesTerminees">Ventes terminées</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col col-sm-6">
+			<button type="submit" name="submitButton" value="add" class="btn btn-lg btn-outline-dark btn-search">Rechercher</button>
+		</div>
+	</div>
+
+</form>
+
+<%@include file="../fragment/piedDePage.jspf"%>
