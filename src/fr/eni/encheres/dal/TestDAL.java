@@ -10,7 +10,7 @@ public class TestDAL {
 	public static void main(String[] args) {
 		// Déclaration et instanciation de la DAO
 		// UtilisateurDAOJdbcImpl utilisateurDAO = new UtilisateurDAOJdbcImpl();
-		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
+/*		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
 
 		//  Instanciation du jeu d'essai
 //		 Utilisateur u1 = new Utilisateur("opd", "olivier", "durand",
@@ -41,7 +41,7 @@ public class TestDAL {
 			e.printStackTrace();
 		}
 		
-
+*/
 		// SelectAll Article
 //		ArticleDAO articleDAO = DAOFactory.getArticleDAO();
 //		try {

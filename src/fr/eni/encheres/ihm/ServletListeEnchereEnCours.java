@@ -2,6 +2,7 @@ package fr.eni.encheres.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,10 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.dal.DALException;
+
 /**
  * Servlet implementation class ServletListeEnchereEnCours
  */
-@WebServlet("/ServletListeEnchereEnCours")
+@WebServlet("")
 public class ServletListeEnchereEnCours extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +26,8 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		
 		String recherche = request.getParameter("recherche");
 		String categorie = request.getParameter("categorie");
@@ -34,6 +41,20 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 			typeVentes = request.getParameter("ventes");
 		}
 		
+		
+		
+		EnchereManager encheres = new EnchereManager();
+		try {
+			List<Enchere> listEncheres = encheres.getListEncheres();
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+//		request.setAttribute("listEncheres", listEncheres);
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/accueil.jsp");

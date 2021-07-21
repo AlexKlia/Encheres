@@ -4,16 +4,20 @@
 	
 	<a href="connexion.jsp">S'inscrire - Se connecter</a>
 	
-	<p>Liste des enchères</p>
+	<h1 class="text-center text-dark">Liste des enchères</h1>
 	
 	<p>Filtres : </p>
 	
 	<form method="get" action="/Encheres/ServletListeEnchereEnCours">
+	<div class="row mt-5">
 	
-	<p>
+	<div class="col">
+	
 	<input type="text" name="recherche" id="recherche" placeholder="Le nom de l'article contient" size="100" maxlength="100" autofocus /> 
-	</p>
+	
+	
 	<label for="categorie">Catégorie : </label>
+	
 	<select name="categorie" size="1"> 
 	    <option value="toutes" selected="selected">Toutes</option> 
 	    <option value="informatique">Informatique</option>
@@ -22,20 +26,32 @@
 	    <option value="sportLoisir">Sport&Loisirs</option>
 	</select>
 	<br/>
+		<div class="form-group row">
+		<div class="col-sm-6">
 		
 	<input type="radio" name="mode" value="achats"/>Achats<br/> 
-    <input type="radio" name="mode" value="ventes"/>Mes ventes<br/> 
-    
+      
   
     <input type="checkbox" name="achats" value="encheresOuvertes"/>enchères ouvertes<br/> 
     <input type="checkbox" name="achats"  value="mesEncheresOuvertes"/>mes enchères en cours<br/> 
     <input type="checkbox" name="achats"  value="mesEncheresRemportees"/>mes enchères remportées<br/>
+    </div>
+  </div>
+    <div class="form-group row">
+  <div class="col-sm-6">
+
+   <input type="radio" name="mode" value="ventes"/>Mes ventes<br/> 
   
     <input type="checkbox" name="ventes"  value="ventesEnCours"/>mes ventes en cours<br/>
  	<input type="checkbox" name="ventes"  value="ventesNonDebutees"/>ventes non debutées<br/> 
     <input type="checkbox" name="ventes"  value="ventesTerminees"/>ventes terminées<br/>
-  
+  </div>
+    </div>
+</div>
+	<div class="col">
 	<input type="submit" value="Rechercher" />
+	</div>
+	</div>
 	</form>
 	
 	
