@@ -24,7 +24,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Statement stmt = null;
 		
 		try/*(Connection con = ConnectionProvider.getConnection())*/ {
-			con = ConnectionProvider2.getConnection();
+			con = ConnectionProvider.getConnection();
 			stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery(SELECT_ALL);

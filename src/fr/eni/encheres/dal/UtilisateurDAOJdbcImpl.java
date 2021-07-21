@@ -9,11 +9,14 @@ import java.util.List;
 import fr.eni.encheres.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
-	private static final String SELECT_ALL = "select * from utilisateurs";
+//	private static final String SELECT_ALL = "select * from utilisateurs";
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit,administrateur) values (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String SELECT_IDENTIFIANT = "select * from UTILISATEURS where pseudo=? AND mot_de_passe=?";
 	private static final String SELECT_BY_ID = "select * from UTILISATEURS where no_utilisateur=?";
-
+	private static final String UPDATE_UTILISATEUR = "update UTILISATEURS SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=? where no_utilisateur=?";
+	private static final String DELETE_UTILISATEUR = "delete from UTILISATEURS where no_utilisateur=?";
+	
+	
 	@Override
 	public Utilisateur selectById(int no_utilisateur) throws DALException {
 		Utilisateur user = null;
@@ -66,9 +69,34 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur update(Utilisateur data) throws DALException {
-		// TODO Auto-generated method stub
+	public Utilisateur update(Utilisateur utilisateur) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			try {
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR,
+				PreparedStatement.RETURN_GENERATED_KEYS);
+				pstmt.setString(1, utilisateur.getPseudo());
+				pstmt.setString(2, utilisateur.getNom());
+				pstmt.setString(3, utilisateur.getPrenom());
+				pstmt.setString(4, utilisateur.getEmail());
+				pstmt.setString(5, utilisateur.getTelephone());
+				pstmt.setString(6, utilisateur.getRue());
+				pstmt.setString(7, utilisateur.getCodePostal());
+				pstmt.setString(8, utilisateur.getVille());
+				pstmt.setInt(9, utilisateur.getNoUtilisateur());
+				pstmt.executeUpdate();
+				pstmt.close();
+				cnx.commit();
+				return utilisateur;
+			} catch (Exception e) {
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 
+		}
 		return null;
 
 	}
@@ -114,10 +142,29 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 
-	@Override
-	public void delete(int id) throws DALException {
-		
 
+
+	@Override
+	public Utilisateur delete(Utilisateur utilisateur) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			try {
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+				pstmt.setInt(1, utilisateur.getNoUtilisateur());
+				pstmt.execute();
+				pstmt.close();
+				cnx.close();
+				return utilisateur;
+			} catch (Exception e) {
+				e.printStackTrace();
+				cnx.close();
+				throw e;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	
+	return null;
 	}
 
 	@Override
@@ -157,6 +204,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		 }
 		
 		return u;
+	}
+
+	@Override
+	public void delete(int id) throws DALException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

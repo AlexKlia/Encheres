@@ -37,9 +37,27 @@ public class UtilisateurManager {
 		}
 	}
 
+	public Utilisateur update(Utilisateur utilisateur) throws DALException{
+//		BusinessException businessException = new BusinessException();
+//		this.validation(utilisateur, businessException);
+//
+//		if (!businessException.hasErreurs()) {
+			return utilisateurDAO.update(utilisateur);
+//		} else {
+//			throw businessException;
+//		}
+}
+
+	public Utilisateur delete(Utilisateur utilisateur) throws DALException {
+
+		return utilisateurDAO.delete(utilisateur);
+
+	}
+
 	private void validation(Utilisateur utilisateur, BusinessException businessException) {
 		if (utilisateur.getPseudo() == null || utilisateur.getPseudo().equals("")) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_NULL, "Le pseudo est obligatoire.");
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_NULL,
+					"Le pseudo est obligatoire.");
 		} else {
 			if (utilisateur.getPseudo().length() > 30) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_ERREUR, "Pseudo trop long.");
@@ -91,14 +109,14 @@ public class UtilisateurManager {
 					"Le code postal est obligatoire.");
 		} else {
 			if (utilisateur.getCodePostal().length() > 10) {
-				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CODE_POSTAL_ERREUR, "Code postal trop long.");
+				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_CODE_POSTAL_ERREUR,
+						"Code postal trop long.");
 			}
 		}
 		if (utilisateur.getVille() == null || utilisateur.getVille().equals(""))
 
 		{
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_VILLE_NULL,
-					"La ville est obligatoire.");
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_VILLE_NULL, "La ville est obligatoire.");
 		} else {
 			if (utilisateur.getVille().length() > 30) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_VILLE_ERREUR, "Ville trop long.");
@@ -111,9 +129,10 @@ public class UtilisateurManager {
 					"Le mot de passe est obligatoire.");
 		} else {
 			if (utilisateur.getMotDePasse().length() > 30) {
-				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MOT_DE_PASSE_ERREUR, "Mot de passe trop long.");
+				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MOT_DE_PASSE_ERREUR,
+						"Mot de passe trop long.");
 			}
 		}
-		
+
 	}
 }

@@ -42,7 +42,7 @@
 				<label for="text" class="col-sm-4 col-form-label">Code
 					postal : </label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" name="codepostal"
+					<input type="text" class="form-control" name="codePostal"
 						id="codepostal" maxlength="10"/>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 			<div class="form-group row">
 				<label for="text" class="col-sm-4 col-form-label">Email : </label>
 				<div class="col-sm-8">
-					<input type="email" class="form-control" name="mail" id="mail" maxlength="20" />
+					<input type="email" class="form-control" name="email" id="mail" maxlength="20" />
 				</div>
 			</div>
 			<div class="form-group row">

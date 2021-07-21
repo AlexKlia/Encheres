@@ -48,10 +48,10 @@ public class ServletCreerCompte extends HttpServlet {
 			String pseudo = request.getParameter("pseudo");
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
-			String email = request.getParameter("mail");
+			String email = request.getParameter("email");
 			String tel = request.getParameter("tel");
 			String rue = request.getParameter("rue");
-			String codePostal = request.getParameter("codepostal");
+			String codePostal = request.getParameter("codePostal");
 			String ville = request.getParameter("ville");
 			String motDePasse = request.getParameter("mdp");
 

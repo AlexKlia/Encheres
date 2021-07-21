@@ -33,12 +33,13 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		boolean isConnexionButton = request.getParameter("submitButton").equals("connexion");
 		boolean isAddButton = request.getParameter("submitButton").equals("add");
-		
+		//Connexion de l'utilisateur
 			if (isConnexionButton) {
 				// Recuperation des donnees du formulaire
 
 				String id = request.getParameter("identifiant");
 				String mdp = request.getParameter("mdp");
+				
 
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 
@@ -50,11 +51,19 @@ public class ServletConnexion extends HttpServlet {
 
 						// Creation de la session utilisateur
 						HttpSession session = request.getSession();
-
+						//Récupération des informations de la session
 						session.setAttribute("noUtilisateur", utilisateurConnecte.getNoUtilisateur());
 						session.setAttribute("identifiant", id);
 						session.setAttribute("mdp", mdp);
-
+						session.setAttribute("pseudo", utilisateurConnecte.getPseudo());
+						session.setAttribute("nom", utilisateurConnecte.getNom());
+						session.setAttribute("prenom", utilisateurConnecte.getPrenom());
+						session.setAttribute("email", utilisateurConnecte.getEmail());
+						session.setAttribute("tel", utilisateurConnecte.getTelephone());
+						session.setAttribute("rue", utilisateurConnecte.getRue());
+						session.setAttribute("codePostal", utilisateurConnecte.getCodePostal());
+						session.setAttribute("ville", utilisateurConnecte.getVille());
+						//Redirection vers la page listeEnchereConnecte
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
 						rd.forward(request, response);
 					} else {
@@ -69,7 +78,7 @@ public class ServletConnexion extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-
+//Création d'un compte utilisateur
 			if (isAddButton) {
 				RequestDispatcher rd = request
 						.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/creerCompte.jsp");
