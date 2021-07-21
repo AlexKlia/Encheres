@@ -56,6 +56,8 @@ public class ServletEnchereModeVente extends HttpServlet {
 						Article article = am.getArticleById(articleId);
 
 						// Informations article
+						Object noUtilisateur = session.getAttribute("noUtilisateur");
+						request.setAttribute("noUtilisateur", noUtilisateur);
 						request.setAttribute("id", request.getAttribute("noArticle").toString());
 						request.setAttribute("article", article.getNomArticle());
 						request.setAttribute("description", article.getDescription());
