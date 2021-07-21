@@ -5,9 +5,7 @@ import fr.eni.encheres.dal.ArticleDAO;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
 import java.time.LocalDate;
-import javax.servlet.http.HttpServletRequest;
 import fr.eni.encheres.BusinessException;
-import fr.eni.encheres.bo.Utilisateur;
 
 public class ArticleManager {
 	private ArticleDAO articleDAO;

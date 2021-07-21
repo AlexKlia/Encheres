@@ -49,22 +49,23 @@ public class ServletEnchereModeVente extends HttpServlet {
 				if (null == user) {
 					user = um.getUserById(userId);
 				}
-				
-				if (null != request.getAttribute("noArticle")) {
-					int articleId = Integer.parseInt(request.getAttribute("noArticle").toString()); 
-					Article article = am.getArticleById(articleId);
-					
-					// Informations article
-					request.setAttribute("id", request.getAttribute("noArticle").toString());
-					request.setAttribute("article", article.getNomArticle());
-					request.setAttribute("description", article.getDescription());
-					request.setAttribute("categorie", String.valueOf(article.getCategorie().getNoCategorie()));
-					request.setAttribute("miseAPrix", String.valueOf(article.getMiseAPrix()));
-					request.setAttribute("debut", article.getDateDebutEncheres().toString());
-					request.setAttribute("fin", article.getDateFinEncheres().toString());
-				}
 
 				if (null != user) {
+					if (null != request.getAttribute("noArticle")) {
+						int articleId = Integer.parseInt(request.getAttribute("noArticle").toString());
+						Article article = am.getArticleById(articleId);
+
+						// Informations article
+						request.setAttribute("id", request.getAttribute("noArticle").toString());
+						request.setAttribute("article", article.getNomArticle());
+						request.setAttribute("description", article.getDescription());
+						request.setAttribute("categorie", String.valueOf(article.getCategorie().getNoCategorie()));
+						request.setAttribute("miseAPrix", String.valueOf(article.getMiseAPrix()));
+						request.setAttribute("debut", article.getDateDebutEncheres().toString());
+						request.setAttribute("fin", article.getDateFinEncheres().toString());
+						request.setAttribute("isCancellable", article.getDateDebutEncheres().isAfter(LocalDate.now()) && user.noUtilisateur == article.getVendeur().getNoUtilisateur());
+					}
+
 					// Informations user
 					request.setAttribute("rue", user.getRue());
 					request.setAttribute("codePostal", String.valueOf(user.getCodePostal()));
@@ -89,29 +90,31 @@ public class ServletEnchereModeVente extends HttpServlet {
 		boolean isCancelButton = request.getParameter("submitButton").equals("cancel");
 		boolean articleAlreadyExist = null != requestNoArticle && !requestNoArticle.equals("");
 		
-		// On verifie l'action qu'on veux effectuer: suppression, ajout ou modification.
-		if (isDeleteButton && articleAlreadyExist) {
-			// Suppression de l'article
+		// On recherche l'article si un id est passé en parametre de la requete pour le mettre a jour
+		if (articleAlreadyExist) {
 			try {
-				am.remove(Integer.parseInt(requestNoArticle));
-				request.setAttribute("deleteSuccess", true);
-				request.setAttribute("alertClass", "info");
+				article = am.getArticleById(Integer.parseInt(requestNoArticle));
 			} catch (NumberFormatException | DALException e) {
 				e.printStackTrace();
 			}
 		} else {
-			// On recherche l'article si un id est passé en parametre de la requete pour le mettre a jour
-			if (articleAlreadyExist) {
+			// Sinon on ajoute un nouvelle article
+			article = new Article();
+		}
+					
+		// On verifie l'action qu'on veux effectuer: suppression, ajout ou modification.
+		if (isDeleteButton && articleAlreadyExist) {
+			// Suppression de l'article
+			if (LocalDate.now().isBefore(article.getDateDebutEncheres())) {
 				try {
-					article = am.getArticleById(Integer.parseInt(requestNoArticle));
+					am.remove(Integer.parseInt(requestNoArticle));
+					request.setAttribute("deleteSuccess", true);
+					request.setAttribute("alertClass", "info");
 				} catch (NumberFormatException | DALException e) {
 					e.printStackTrace();
 				}
-			} else {
-				// Sinon on ajoute un nouvelle article
-				article = new Article();
 			}
-			
+		} else {
 			// Dans le cas du clic sur le boutton "Annuler", le traitement est terminé.
 			if (!isCancelButton) {
 				article.setNomArticle(request.getParameter("article"));

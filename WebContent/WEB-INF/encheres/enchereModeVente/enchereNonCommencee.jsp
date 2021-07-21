@@ -17,6 +17,7 @@
 	Boolean deleteSuccess = (Boolean) request.getAttribute("deleteSuccess");
 	Boolean addSuccess = (Boolean) request.getAttribute("addSuccess");
 	Boolean updateSuccess = (Boolean) request.getAttribute("updateSuccess");
+	Boolean isCancellable = (Boolean) request.getAttribute("isCancellable");
 %>
 
 <c:if test="${deleteSuccess || addSuccess || updateSuccess || cancelSuccess || null != errorMessages}">
@@ -143,7 +144,7 @@
 
 			<button type="submit" name="submitButton" value="add" class="btn btn-lg btn-outline-dark mr-5">Enregistrer</button>
 			<button type="submit" name="submitButton" value="cancel" class="btn btn-lg btn-outline-secondary">Annuler</button>
-			<c:if test="${null != id}">
+			<c:if test="${isCancellable}">
 				<button type="submit" name="submitButton" value="delete" class="btn btn-lg btn-outline-danger ml-3">Annuler la vente</button>
 			</c:if>
 		</form>
