@@ -1,5 +1,8 @@
 package fr.eni.encheres.dal;
 
+import java.util.List;
+
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 
 public class TestDAL {
@@ -32,6 +35,16 @@ public class TestDAL {
 		}
 		
 
+		// SelectAll Article
+		ArticleDAO articleDAO = DAOFactory.getArticleDAO();
+		try {
+			List<Article> articles = articleDAO.selectAll();
+			for (Article article: articles) {
+				System.out.println(article);
+			}
+		} catch (DALException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

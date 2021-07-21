@@ -3,7 +3,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Article;
@@ -14,6 +16,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
 	private static final String SELECT_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
+	private static final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
 	private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
 	
 	@Override
@@ -59,8 +62,45 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public List<Article> selectAll() throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Article> articles = new ArrayList<Article>();
+		Article article = null;
+		try (Connection connection = ConnectionProvider.getConnection()) {
+			try {
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(SELECT_ALL);
+				while (rs.next()) {
+					article = new Article();
+					article.setNoArticle(rs.getInt("no_article"));
+					article.setNomArticle(rs.getString("nom_article"));
+					article.setDescription(rs.getString("description"));
+					article.setDateDebutEncheres(LocalDate.parse(rs.getString("date_debut_encheres")));
+					article.setDateFinEncheres(LocalDate.parse(rs.getString("date_fin_encheres")));
+					article.setMiseAPrix(rs.getInt("prix_initial"));
+					article.setPrixVente(rs.getInt("prix_vente"));
+					
+					Utilisateur vendeur = new Utilisateur();
+					vendeur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+					article.setVendeur(vendeur);
+
+					Categorie categorie = new Categorie();
+					categorie.setNoCategorie(rs.getInt("no_categorie"));
+					article.setCategorie(categorie);
+					
+					articles.add(article);
+			    }
+				rs.close();                       
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				connection.close();
+				throw e;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		return articles;
 	}
 
 	@Override
