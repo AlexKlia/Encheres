@@ -40,8 +40,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 		HttpSession session = request.getSession();
 		Object id = session.getAttribute("noUtilisateur");
 		if (null ==  id || id.equals("")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/connexion.jsp");
-			rd.forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/ServletConnexion");
 		} else {
 			int userId = Integer.parseInt(id.toString());
 

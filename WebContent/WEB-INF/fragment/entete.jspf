@@ -27,14 +27,42 @@
 
 	<nav class="navbar navbar-dark bg-dark mb-3">
 		<a class="navbar-brand" href="#">ENI-Encheres</a>
-		
-		<!-- Connecté -->
-		<c:if test="${null != noUtilisateur}">
-			<a class="nav-link" href="<%= request.getContextPath() %>">Enchères</a>
-			<a class="nav-link" href="<%= request.getContextPath() %>/ventes">Vendre un article</a>
-			<a class="nav-link" href="<%= request.getContextPath() %>/ServletProfil">Mon Profil</a>
-			<a class="nav-link" href="<%= request.getContextPath() %>/logout">Déconnexion</a>
-		</c:if>
+
+		<div class="d-flex flex-row navbar-nav">
+			<c:choose>
+				<c:when test="${null != noUtilisateur}">
+					<!-- Connecter -->
+					<div class="p-2">
+						<a class="nav-link" href="<%= request.getContextPath() %>">Enchères</a>
+					</div>
+
+					<div class="p-2">
+						<a class="nav-link" href="<%= request.getContextPath() %>/ventes">Vendre
+							un article</a>
+					</div>
+
+					<div class="p-2">
+						<a class="nav-link"
+							href="<%= request.getContextPath() %>/ServletProfil">Mon
+							Profil</a>
+					</div>
+
+					<div class="p-2">
+						<a class="nav-link" href="<%= request.getContextPath() %>/logout">Déconnexion</a>
+					</div>
+				</c:when>
+
+				<c:otherwise>
+					<!-- Deconnecter -->
+					<div class="p-2">
+						<a class="nav-link"
+							href="<%= request.getContextPath() %>/ServletConnexion">S'inscrire
+							- Se connecter</a>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+
 	</nav>
 
 	<div class="container">

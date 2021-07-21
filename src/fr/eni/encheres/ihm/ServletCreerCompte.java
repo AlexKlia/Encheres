@@ -70,8 +70,8 @@ public class ServletCreerCompte extends HttpServlet {
 			}
 
 			if (utilsateurRenvoye != null) {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
-				rd.forward(request, response);
+				//Redirection vers la page d'accueil
+				response.sendRedirect(request.getContextPath());
 			} else {
 				String erreurCreation = "Compte utilisateur non crée, renseigner à nouveau les champs";
 				System.out.println("Identifiant et mot de passe incorrects");

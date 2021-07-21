@@ -25,8 +25,6 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
-		rd.forward(request, response);
 		HttpSession session = request.getSession();
 		// Recuperation des informations de la session
 
@@ -51,6 +49,8 @@ public class ServletModifierProfil extends HttpServlet {
 		Object credit = session.getAttribute("credit");
 		request.setAttribute("credit", credit);
 		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -89,9 +89,8 @@ public class ServletModifierProfil extends HttpServlet {
 
 				e.printStackTrace();
 			}
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
-			rd.forward(request, response);
 
+			doGet(request, response);
 		}
 		if (isDeleteButton) {
 			HttpSession session = request.getSession();
@@ -105,8 +104,8 @@ public class ServletModifierProfil extends HttpServlet {
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
-			rd.forward(request, response);
+			//Redirection vers la page d'accueil
+			response.sendRedirect(request.getContextPath());
 		}
 	}
 

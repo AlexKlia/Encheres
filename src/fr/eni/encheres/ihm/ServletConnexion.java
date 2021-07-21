@@ -65,9 +65,8 @@ public class ServletConnexion extends HttpServlet {
 						session.setAttribute("ville", utilisateurConnecte.getVille());
 						session.setAttribute("mdp", utilisateurConnecte.getMotDePasse());
 						session.setAttribute("credit", utilisateurConnecte.getCredit());
-						//Redirection vers la page listeEnchereConnecte
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
-						rd.forward(request, response);
+						//Redirection vers la page d'accueil
+						response.sendRedirect(request.getContextPath());
 					} else {
 						String erreurConnexion = "Identifiant et mot de passe incorrects";
 						System.out.println("Identifiant et mot de passe incorrects");

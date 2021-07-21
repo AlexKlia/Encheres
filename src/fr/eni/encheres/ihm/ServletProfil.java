@@ -65,8 +65,8 @@ public class ServletProfil extends HttpServlet {
 			rd.forward(request, response);
 		}
 		if (isCancelButton) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/listeEncheresConnecte.jsp");
-			rd.forward(request, response);
+			//Redirection vers la page d'accueil
+			response.sendRedirect(request.getContextPath());
 		}
 	}
 

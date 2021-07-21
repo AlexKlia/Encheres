@@ -2,8 +2,6 @@
 	
 	<%@include file="../fragment/entete.jspf" %>
 	
-	<a href="connexion.jsp">S'inscrire - Se connecter</a>
-	
 	<h1 class="text-center text-dark">Liste des enchères</h1>
 	
 	<p>Filtres : </p>
