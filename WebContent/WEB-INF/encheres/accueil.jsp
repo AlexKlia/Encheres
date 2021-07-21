@@ -4,8 +4,7 @@
 
 <h2>Filtres :</h2>
 
-<form action="${request.getContextPath()}/ServletListeEnchereEnCours" method="GET">
-	
+<form action="${request.getContextPath()}" method="GET">
 	<div class="row">
 		<div class="col col-sm-6">
 			<div class="form-group row">
