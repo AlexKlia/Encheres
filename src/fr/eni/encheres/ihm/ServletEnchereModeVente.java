@@ -180,9 +180,12 @@ public class ServletEnchereModeVente extends HttpServlet {
 						request.setAttribute("updateSuccess", true);
 					} else {
 						noArticle = am.add(article);
-						retrait.setNoArticle(noArticle);
-						rm.add(retrait);
-						request.setAttribute("addSuccess", true);
+						if(noArticle != null) {
+							retrait.setNoArticle(noArticle);
+							rm.add(retrait);
+							request.setAttribute("addSuccess", true);
+						}
+						
 					}
 				}
 			} catch (BusinessException e) {

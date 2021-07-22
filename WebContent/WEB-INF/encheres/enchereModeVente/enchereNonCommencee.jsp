@@ -6,11 +6,11 @@
 			<div class="alert alert-${alertClass}" role="alert">
 				<c:choose>
 					<c:when test="${deleteSuccess}">
-			  			La vente à était annulé avec succès.
+			  			La vente a été annulée avec succès.
 			        </c:when>
 			        
 			        <c:when test="${addSuccess}">
-					  	La vente à était crée avec succès.
+					  	La vente a été créee avec succès.
 			        </c:when>
 			        
 			        <c:when test="${null != errorMessages}">
@@ -22,11 +22,11 @@
 			        </c:when>
 			        
 			        <c:when test="${updateSuccess}">
-					  	La vente à était modifiée avec succès.
+					  	La vente a été modifiée avec succès.
 			        </c:when>
 												
 			        <c:otherwise>
-						Les modifications ont était annulé.
+						Les modifications ont été annulées.
 			        </c:otherwise>
 				</c:choose>
 			</div>

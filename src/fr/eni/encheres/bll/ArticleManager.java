@@ -16,14 +16,20 @@ public class ArticleManager {
 		this.articleDAO = DAOFactory.getArticleDAO();
 	}
 	
-	public int add(Article article) throws DALException, BusinessException {
+	public Integer add(Article article) throws DALException, BusinessException {
 		BusinessException exception = new BusinessException();
 		validation(article, exception);
 		
 		if(!exception.hasErreurs())
 		{
 			article = articleDAO.insert(article);
-			return article.getNoArticle();
+			if(article != null) {
+				return article.getNoArticle();
+			}else {
+				System.out.println("test");
+				return null;
+			}
+			
 		} else {
 			throw exception;
 		}
@@ -72,10 +78,10 @@ public class ArticleManager {
 		}
 		
 		if(null == article.getDescription() || article.getDescription().equals("")) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_NULL, "Déscription de l'article obligatoire.");
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_NULL, "Description de l'article obligatoire.");
 		} else {
 			if(300 < article.getDescription().length()) {
-				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_ERREUR, "Déscription de l'article trop longue.");
+				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_ERREUR, "Description de l'article trop longue.");
 			}	
 		}
 		
@@ -95,7 +101,7 @@ public class ArticleManager {
 			}
 			
 			if(null != article.getDateDebutEncheres() && article.getDateFinEncheres().isBefore(article.getDateDebutEncheres())) {
-				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_FIN_BEFORE_DEBUT, "Date de fin de la vente doit etre superieur a la date de debut.");
+				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_FIN_BEFORE_DEBUT, "Date de fin de la vente doit être superieur à la date de debut.");
 			}	
 		}
 	}
