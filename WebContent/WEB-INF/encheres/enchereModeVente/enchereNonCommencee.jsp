@@ -6,11 +6,11 @@
 			<div class="alert alert-${alertClass}" role="alert">
 				<c:choose>
 					<c:when test="${deleteSuccess}">
-			  			La vente a été annulée avec succès.
+			  			La vente a ï¿½tï¿½ annulï¿½e avec succï¿½s.
 			        </c:when>
 			        
 			        <c:when test="${addSuccess}">
-					  	La vente a été créee avec succès.
+					  	La vente a ï¿½tï¿½ crï¿½ee avec succï¿½s.
 			        </c:when>
 			        
 			        <c:when test="${null != errorMessages}">
@@ -22,11 +22,11 @@
 			        </c:when>
 			        
 			        <c:when test="${updateSuccess}">
-					  	La vente a été modifiée avec succès.
+					  	La vente a ï¿½tï¿½ modifiï¿½e avec succï¿½s.
 			        </c:when>
 												
 			        <c:otherwise>
-						Les modifications ont été annulées.
+						Les modifications ont ï¿½tï¿½ annulï¿½es.
 			        </c:otherwise>
 				</c:choose>
 			</div>
@@ -37,11 +37,11 @@
 <h1 class="text-center">${null != id ? "Votre vente" : "Nouvelle vente"}</h1>
 
 <div class="row mt-5">
-	<div class="col-3">
+	<div class="col-lg-3 d-none d-md-block">
 		<img class="col-12" alt="Photo de l'article en ventes" src="images/noPics.jpg">
 	</div>
 
-	<div class="col-9">
+	<div class="col-lg-9 col-12">
 		<form action="${request.getContextPath()}" method="POST">
 			<div class="form-group row">
 				<label for="article" class="col-sm-3 col-form-label">Article :</label>
@@ -58,13 +58,17 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="categorie" class="col-sm-3 col-form-label">Catégorie :</label>
+				<label for="categorie" class="col-sm-3 col-form-label">Catï¿½gorie :</label>
 				<div class="col-sm-8">
 					<select id="categorie" class="form-control" name="categorie">
 						<option value="1" ${categorie.equals('1') ? 'selected' : ''}>Maison</option>
 						<option value="2" ${categorie.equals('2') ? 'selected' : ''}>Exterieur</option>
 					</select>
 				</div>
+			</div>
+			
+			<div class="col-12 d-sm-none">
+				<img class="col-12" alt="Photo de l'article en ventes" src="images/noPics.jpg">
 			</div>
 
 			<div class="form-group row">
@@ -75,14 +79,14 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="miseAPrix" class="col-sm-3 col-form-label">Mise à  prix :</label>
+				<label for="miseAPrix" class="col-sm-3 col-form-label">Mise ï¿½ prix :</label>
 				<div class="col-sm-8">
 					<input type="number" class="form-control" id="miseAPrix" name="miseAPrix" value="${miseAPrix}">
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="debutEnchere" class="col-sm-3 col-form-label">Début de l'enchere :</label>
+				<label for="debutEnchere" class="col-sm-3 col-form-label">Dï¿½but de l'enchere :</label>
 				<div class="col-sm-8">
 					<input type="date" class="form-control" id="debutEnchere" name="debutEnchere" value="${debut}">
 				</div>
