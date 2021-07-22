@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
@@ -81,28 +82,31 @@ public class ServletModifierProfil extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur utilisateuraModifier = new Utilisateur(noUtilisateurInt, pseudo, nom, prenom, email, tel, rue,
 					codePostal, ville,mdp,creditInt);
-
+			
 			try {
 				utilisateurManager.update(utilisateuraModifier);
-				request.setAttribute("pseudo", pseudo);
-				request.setAttribute("nom", nom);
-				request.setAttribute("prenom", prenom);
-				request.setAttribute("email", email);
-				request.setAttribute("tel", tel);
-				request.setAttribute("rue", rue);
-				request.setAttribute("codePostal", codePostal);
-				request.setAttribute("ville", ville);
-				request.setAttribute("mdp", mdp);
-				request.setAttribute("creditInt", creditInt);
-
+				session.setAttribute("noUtilisateur", utilisateuraModifier.getNoUtilisateur());
+				session.setAttribute("identifiant", utilisateuraModifier.getPseudo());
+				session.setAttribute("mdp", utilisateuraModifier.getMotDePasse());
+				session.setAttribute("pseudo", utilisateuraModifier.getPseudo());
+				session.setAttribute("nom", utilisateuraModifier.getNom());
+				session.setAttribute("prenom", utilisateuraModifier.getPrenom());
+				session.setAttribute("email", utilisateuraModifier.getEmail());
+				session.setAttribute("tel", utilisateuraModifier.getTelephone());
+				session.setAttribute("rue", utilisateuraModifier.getRue());
+				session.setAttribute("codePostal", utilisateuraModifier.getCodePostal());
+				session.setAttribute("ville", utilisateuraModifier.getVille());
+				session.setAttribute("mdp", utilisateuraModifier.getMotDePasse());
+				session.setAttribute("credit", utilisateuraModifier.getCredit());
 			} catch (DALException e) {
-
 				e.printStackTrace();
+			} catch (BusinessException e) {
+				String[] errorMessages = e.getErrorMessages();
+				request.setAttribute("errorMessages", errorMessages);
 			}
 
 			//Redirection vers la page
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
-			rd.forward(request, response);
+			doGet(request, response);
 		}
 		if (isDeleteButton) {
 			HttpSession session = request.getSession();

@@ -2,22 +2,15 @@
 
 <%@ include file="../../fragment/entete.jspf"%>
 
-<!-- Déclaration des variables -->
-<%
-	String erreur = (String) request.getAttribute("erreur");
-%>
-
-<div class="alert alert-${alertClass}" role="alert">
-		<c:choose>
-			<c:when test="${errorMessages != null}">
-				<ul class="list-unstyled">
-					<c:forEach var="var" items="${errorMessages}">
-						<li>${var}</li>
-					</c:forEach>
-				</ul>
-			</c:when>
-		</c:choose>
-</div>
+<c:if test="${errorMessages != null}">
+	<div class="alert alert-danger" role="alert">
+		<ul class="list-unstyled">
+			<c:forEach var="var" items="${errorMessages}">
+				<li>${var}</li>
+			</c:forEach>
+		</ul>
+	</div>
+</c:if>
 
 
 <h1 class="text-center text-dark">Mon profil</h1>
@@ -131,7 +124,7 @@
 	<div class="container">
 		<div class="row mt-5">
 			<div class="text-danger">
-				<c:if test="${erreur!=null }"><%=erreur%></c:if>
+				<c:if test="${erreur!=null }">${erreur}</c:if>
 			</div>
 		</div>
 	</div>

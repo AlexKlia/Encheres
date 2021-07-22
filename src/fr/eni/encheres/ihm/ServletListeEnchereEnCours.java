@@ -89,7 +89,10 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 						listPseudoVendeur.add(pseudoVendeur);
 					}
 					
-					
+					UtilisateurManager utilisateurManager = new UtilisateurManager();
+					Utilisateur user = utilisateurManager.getUserById(element.getVendeur().getNoUtilisateur());
+					String pseudoVendeur = user.getPseudo();
+					element.getVendeur().setPseudo(pseudoVendeur);
 					
 				}
 
@@ -110,7 +113,9 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 		}
 		
 
-		
+		HttpSession session = request.getSession();
+		Object noUtilisateur = session.getAttribute("noUtilisateur");
+		request.setAttribute("noUtilisateur", noUtilisateur);
 		request.setAttribute("listArticles", listArticles);
 		request.setAttribute("listEncheres", listEncheres);
 		request.setAttribute("listUtilisateurs", listUtilisateurs);

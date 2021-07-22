@@ -1,19 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="../../fragment/entete.jspf"%>
-<%
-	// Déclarations des variables
-	String pseudo = (String) request.getAttribute("pseudo");
-	String nom = (String) request.getAttribute("nom");
-	String prenom = (String) request.getAttribute("prenom");
-	String email = (String) request.getAttribute("email");
-	String tel = (String) request.getAttribute("tel");
-	String rue = (String) request.getAttribute("rue");
-	String codePostal = (String) request.getAttribute("codePostal");
-	String ville = (String) request.getAttribute("ville");
-	String mdp = (String) request.getAttribute("mdp");
-	String credit = (String) request.getAttribute("credit");
-%>
+
+<c:if test="${errorMessages != null}">
+	<div class="alert alert-danger" role="alert">
+		<ul class="list-unstyled">
+			<c:forEach var="var" items="${errorMessages}">
+				<li>${var}</li>
+			</c:forEach>
+		</ul>
+	</div>
+</c:if>
+
 
 <h1 class="text-center text-dark">Mon profil</h1>
 
@@ -94,7 +92,7 @@
 				<label for="text" class="col-sm-4 col-form-label">Credit
 					: </label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" name="credit" id="credit" maxlength="30" value="${credit}"/>
+					<input type="text" class="form-control" name="credit" id="credit" maxlength="30" value="${credit}" readonly/>
 				</div>
 			</div>
 		</div>

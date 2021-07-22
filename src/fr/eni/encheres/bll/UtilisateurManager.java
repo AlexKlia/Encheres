@@ -37,15 +37,15 @@ public class UtilisateurManager {
 		}
 	}
 
-	public Utilisateur update(Utilisateur utilisateur) throws DALException{
-//		BusinessException businessException = new BusinessException();
-//		this.validation(utilisateur, businessException);
-//
-//		if (!businessException.hasErreurs()) {
+	public Utilisateur update(Utilisateur utilisateur) throws DALException, BusinessException {
+		BusinessException businessException = new BusinessException();
+		this.validation(utilisateur, businessException);
+
+		if (!businessException.hasErreurs()) {
 			return utilisateurDAO.update(utilisateur);
-//		} else {
-//			throw businessException;
-//		}
+		} else {
+			throw businessException;
+		}
 }
 
 	public String delete(Utilisateur utilisateur) throws DALException {
