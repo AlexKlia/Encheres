@@ -56,7 +56,10 @@ public class UtilisateurManager {
 	}
 	
 	public String getPseudoVendeur(int id) throws DALException {
-		return utilisateurDAO.selectById(id).getPseudo();
+		if (null != utilisateurDAO.selectById(id)) {
+			return utilisateurDAO.selectById(id).getPseudo();
+		}
+		return null;
 	}
 
 	private void validation(Utilisateur utilisateur, BusinessException businessException) {

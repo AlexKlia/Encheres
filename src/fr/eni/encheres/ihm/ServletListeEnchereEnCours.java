@@ -70,28 +70,44 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 			listArticles = articleManager.getAllArticles();
 			for (Article element : listArticles) {
 				EnchereManager enchereManager = new EnchereManager();
-	//			Enchere enchereMax = enchereManager.getEnchereByID(element.getNoArticle());
-				Integer montantMax = enchereManager.getEnchereByID(element.getNoArticle()).getMontantEnchere();
-	//			Integer misAPris = element.getMiseAPrix();
-	/*		*/	if (montantMax < element.getMiseAPrix()) {
-					montantMax = element.getMiseAPrix();
-				} else {
+				// Enchere enchereMax = enchereManager.getEnchereByID(element.getNoArticle());
+				if (null != element.getNoArticle()) {
+					Integer montantMax = null;
+					Enchere enchere = enchereManager.getEnchereByID(element.getNoArticle());
+					if (null != enchere) {
+						montantMax = enchere.getMontantEnchere();// Integer misAPris = element.getMiseAPrix();
+						if (montantMax < element.getMiseAPrix()) {
+							montantMax = element.getMiseAPrix();
+							listMontantMax.add(montantMax.toString());
+						} else {
+						}
+						
+						
+						UtilisateurManager utilisateurManager = new UtilisateurManager();
+						
+						String pseudoVendeur = utilisateurManager.getPseudoVendeur(element.getNoArticle());
+						listPseudoVendeur.add(pseudoVendeur);
+					}
+					
+					
+					
 				}
-				listMontantMax.add(montantMax.toString());
-				
-	//			listEncheres.add(enchereMax);
+
+				// listEncheres.add(enchereMax);
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				String pseudoVendeur = utilisateurManager.getPseudoVendeur(element.getNoArticle());
-				listPseudoVendeur.add(pseudoVendeur);
-	/*			Utilisateur vendeur = utilisateurManager.getUserById(element.getNoArticle());
-				element.setDescription(psedoVendeur);
-				listUtilisateurs.add(vendeur);
-	*/		}
-				
-			} catch (DALException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				if (null != pseudoVendeur) {
+					listPseudoVendeur.add(pseudoVendeur);
+				}
+				/*
+				 * Utilisateur vendeur = utilisateurManager.getUserById(element.getNoArticle());
+				 * element.setDescription(psedoVendeur); listUtilisateurs.add(vendeur);
+				 */ }
+
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 
 		
