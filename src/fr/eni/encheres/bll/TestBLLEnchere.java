@@ -23,13 +23,16 @@ public class TestBLLEnchere {
 		EnchereDAOJdbcImpl enchereDAO = new EnchereDAOJdbcImpl();
 		
 		Enchere enchere = enchereDAO.selectById(8);
-		System.out.println(enchere);
+		System.out.println(enchere.getMontantEnchere());
 		
 //		List<Enchere> list = enchereDAO.selectAll();
 //		System.out.println(list);		
 				
+		EnchereManager em = new EnchereManager();
 		
-		
+		Enchere enchere1 = em.getEnchereByID(9);
+		System.out.println(enchere1);
+
 		
 /*		ArticleManager am = new ArticleManager();
 

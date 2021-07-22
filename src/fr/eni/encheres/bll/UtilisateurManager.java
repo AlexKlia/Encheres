@@ -54,6 +54,10 @@ public class UtilisateurManager {
 		return "utilisateur : "+ utilisateur.getNoUtilisateur()+" bien supprimé";
 
 	}
+	
+	public String getPseudoVendeur(int id) throws DALException {
+		return utilisateurDAO.selectById(id).getPseudo();
+	}
 
 	private void validation(Utilisateur utilisateur, BusinessException businessException) {
 		if (utilisateur.getPseudo() == null || utilisateur.getPseudo().equals("")) {

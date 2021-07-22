@@ -21,17 +21,24 @@ public class EnchereManager {
 		List<Enchere> encheres = null;
 //		try {
 			encheres = enchereDAO.selectAll();
+			
+			
+			
 /*		} catch (Exception  DALException  e) {
 			
 			 * e.printStackTrace();
 			throw new BLLException("Erreur récupération ListEncheres()", e);
 			
 		}
-		
-		
-		
 */		return encheres; 
 		
+	}
+	
+	
+	public Enchere getEnchereByID(int id) throws DALException {
+		Enchere enchere = null;
+		return enchere = enchereDAO.selectById(id);		
+				
 	}
 	
 	

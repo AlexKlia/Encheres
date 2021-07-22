@@ -1,6 +1,6 @@
 <%@include file="../fragment/entete.jspf"%>
 
-<h1 class="text-center text-dark">Liste des enchères</h1>
+<h1 class="text-center text-dark">Liste des enchï¿½res</h1>
 
 <h2>Filtres :</h2>
 
@@ -14,7 +14,7 @@
 			</div>
 		
 			<div class="form-group row">
-				<label class="col-sm-auto col-form-label" for="categorie">Catégorie: </label>
+				<label class="col-sm-auto col-form-label" for="categorie">Catï¿½gorie: </label>
 				<div class="col-sm-6">
 					<select class="form-control" name="categorie">
 						<option value="toutes" selected="selected">Toutes</option>
@@ -34,17 +34,17 @@
 						
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" name="achats" value="encheresOuvertes" id="encheresOuvertes">
-							<label class="form-check-label" for="encheresOuvertes">Enchères ouvertes</label>
+							<label class="form-check-label" for="encheresOuvertes">Enchï¿½res ouvertes</label>
 						</div>
 						
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" name="achats" value="mesEncheresOuvertes" id="mesEncheresOuvertes">
-							<label class="form-check-label" for="mesEncheresOuvertes">Mes enchères en cours</label>
+							<label class="form-check-label" for="mesEncheresOuvertes">Mes enchï¿½res en cours</label>
 						</div>
 						
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" name="achats" value="mesEncheresRemportees" id="mesEncheresRemportees">
-							<label class="form-check-label" for="mesEncheresRemportees">Mes enchères remportées</label>
+							<label class="form-check-label" for="mesEncheresRemportees">Mes enchï¿½res remportï¿½es</label>
 						</div>
 					</div>
 				</div>
@@ -61,12 +61,12 @@
 						
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" name="ventes" value="ventesNonDebutees" id="ventesNonDebutees">
-							<label class="form-check-label" for="ventesNonDebutees">Ventes non debutées</label>
+							<label class="form-check-label" for="ventesNonDebutees">Ventes non debutï¿½es</label>
 						</div>
 						
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" name="ventes" value="ventesTerminees" id="ventesTerminees">
-							<label class="form-check-label" for="ventesTerminees">Ventes terminées</label>
+							<label class="form-check-label" for="ventesTerminees">Ventes terminï¿½es</label>
 						</div>
 					</div>
 				</div>
@@ -80,4 +80,54 @@
 
 </form>
 
-<%@include file="../fragment/piedDePage.jspf"%>
+	// La liste des encheres
+	<br/><br/>
+	
+		
+	
+		
+	<%
+		
+	%>
+	
+	<ul>
+		<c:forEach var="a" items="${listArticles}">
+		<div>
+			<li>
+				${a.nomArticle}
+			</li>
+			<li>
+				${a.miseAPrix}
+			</li>
+			<li>
+				${a.dateFinEncheres}
+			</li>
+			<li>
+				${a.vendeur}
+			</li>
+			<li>
+				${listMontantMax}
+	
+			</li>
+			<li>
+				${listPseudoVendeur}
+			</li>
+		</div>
+		</c:forEach>
+	</ul>
+	
+	
+<%
+		
+				%>
+			
+		String nomArticle;
+		int montantEnchere;
+		LocalDate dateFinEncheres;
+		String vendeur;
+		
+		
+	
+
+	<%@include file="../fragment/piedDePage.jspf"%>
+	

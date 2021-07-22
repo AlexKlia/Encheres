@@ -2,6 +2,7 @@ package fr.eni.encheres.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
 
 /**
@@ -27,10 +33,15 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		
+			
 		String recherche = request.getParameter("recherche");
 		String categorie = request.getParameter("categorie");
+		
+		
+/*		HttpSession session = request.getSession();
+		if(session.getAttribute("sessionOuverte")!=null)
+		{
+*/
 		String mode = request.getParameter("mode");
 		String typeAchats;
 		String typeVentes;
@@ -41,21 +52,54 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 			typeVentes = request.getParameter("ventes");
 		}
 		
+/*		}
+		session.setAttribute("sessionOuverte", "1");
+*/
+	
 		
 		
-		EnchereManager encheres = new EnchereManager();
+		List<Article> listArticles = new ArrayList<Article>(); 
+		ArticleManager articleManager = new ArticleManager();
+		List<Enchere> listEncheres = new ArrayList<Enchere>();
+		List<Utilisateur> listUtilisateurs = new ArrayList<Utilisateur>();
+		List<String> listMontantMax = new ArrayList<>(); 
+		List<String> listPseudoVendeur = new ArrayList<>(); 
+		
+		
 		try {
-			List<Enchere> listEncheres = encheres.getListEncheres();
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			listArticles = articleManager.getAllArticles();
+			for (Article element : listArticles) {
+				EnchereManager enchereManager = new EnchereManager();
+	//			Enchere enchereMax = enchereManager.getEnchereByID(element.getNoArticle());
+				Integer montantMax = enchereManager.getEnchereByID(element.getNoArticle()).getMontantEnchere();
+	//			Integer misAPris = element.getMiseAPrix();
+	/*		*/	if (montantMax < element.getMiseAPrix()) {
+					montantMax = element.getMiseAPrix();
+				} else {
+				}
+				listMontantMax.add(montantMax.toString());
+				
+	//			listEncheres.add(enchereMax);
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+				String pseudoVendeur = utilisateurManager.getPseudoVendeur(element.getNoArticle());
+				listPseudoVendeur.add(pseudoVendeur);
+	/*			Utilisateur vendeur = utilisateurManager.getUserById(element.getNoArticle());
+				element.setDescription(psedoVendeur);
+				listUtilisateurs.add(vendeur);
+	*/		}
+				
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
+
 		
-		
-		
-//		request.setAttribute("listEncheres", listEncheres);
-		
+		request.setAttribute("listArticles", listArticles);
+		request.setAttribute("listEncheres", listEncheres);
+		request.setAttribute("listUtilisateurs", listUtilisateurs);
+		request.setAttribute("listMontantMax", listMontantMax);
+		request.setAttribute("listPseudoVendeur", listPseudoVendeur);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/accueil.jsp");
 		rd.forward(request, response);
@@ -67,12 +111,7 @@ public class ServletListeEnchereEnCours extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 doGet(request, response);
 		
-//		photoArticle;
-		String nomArticle;
-		int meilleureOffre;
-		LocalDate finEnchere;
-		String vendeur;
-		
+
 			}
 
 }
