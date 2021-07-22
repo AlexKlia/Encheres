@@ -115,13 +115,22 @@ public class ServletModifierProfil extends HttpServlet {
 
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur utilisateuraSupprimer = new Utilisateur(noUtilisateurInt);
+
+			// Articles by utilisateur.id
+			// foreach
+				// Retrait by article.id
+				// retraitmanager.remove(article.id)
+				// articlemanager.remove(article.id)
+			// utilisateurManager.delete(utilisateuraSupprimer);
+			
 			try {
 				utilisateurManager.delete(utilisateuraSupprimer);
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
+			
 			//Redirection vers la page d'accueil
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath()+"/logout");
 		}
 	}
 

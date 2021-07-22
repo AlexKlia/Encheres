@@ -52,15 +52,19 @@ public class ServletEnchereModeVente extends HttpServlet {
 				}
 
 				if (null != user) {
-					if (null != request.getAttribute("noArticle")) {
-						int articleId = Integer.parseInt(request.getAttribute("noArticle").toString());
+					if (null != request.getAttribute("noArticle") || null != request.getParameter("noArticle")) {
+						String articleIdToString = null == request.getAttribute("noArticle")
+								? request.getParameter("noArticle").toString()
+								: request.getAttribute("noArticle").toString()
+						;
+						int articleId = Integer.parseInt(articleIdToString);
 						Article article = am.getArticleById(articleId);
 						Retrait retrait = rm.getRetraitById(articleId);
 
 						// Informations article
 						Object noUtilisateur = session.getAttribute("noUtilisateur");
 						request.setAttribute("noUtilisateur", noUtilisateur);
-						request.setAttribute("id", request.getAttribute("noArticle").toString());
+						request.setAttribute("id", articleIdToString);
 						request.setAttribute("article", article.getNomArticle());
 						request.setAttribute("description", article.getDescription());
 						request.setAttribute("categorie", String.valueOf(article.getCategorie().getNoCategorie()));
@@ -68,8 +72,6 @@ public class ServletEnchereModeVente extends HttpServlet {
 						request.setAttribute("debut", article.getDateDebutEncheres().toString());
 						request.setAttribute("fin", article.getDateFinEncheres().toString());
 						request.setAttribute("isCancellable", article.getDateDebutEncheres().isAfter(LocalDate.now()) && user.noUtilisateur == article.getVendeur().getNoUtilisateur());
-						
-						
 						if (null != retrait) {
 							request.setAttribute("rue", retrait.getRue());
 							request.setAttribute("codePostal", String.valueOf(retrait.getCodePostal()));
@@ -81,8 +83,6 @@ public class ServletEnchereModeVente extends HttpServlet {
 							request.setAttribute("ville", user.getVille());
 						}
 					}
-
-					
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
