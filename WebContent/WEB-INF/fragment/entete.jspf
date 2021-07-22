@@ -22,7 +22,7 @@
 <body>
 
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="navbar-brand" href="#">ENI-Encheres</a>
+		<a class="navbar-brand" href="<%= request.getContextPath() %>">ENI-Encheres</a>
 
 		<div class="d-flex flex-row navbar-nav">
 			<c:choose>
