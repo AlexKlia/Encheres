@@ -16,20 +16,14 @@ public class ArticleManager {
 		this.articleDAO = DAOFactory.getArticleDAO();
 	}
 	
-	public Integer add(Article article) throws DALException, BusinessException {
+	public int add(Article article) throws DALException, BusinessException {
 		BusinessException exception = new BusinessException();
 		validation(article, exception);
 		
 		if(!exception.hasErreurs())
 		{
 			article = articleDAO.insert(article);
-			if(article != null) {
-				return article.getNoArticle();
-			}else {
-				System.out.println("test");
-				return null;
-			}
-			
+			return article.getNoArticle();
 		} else {
 			throw exception;
 		}
