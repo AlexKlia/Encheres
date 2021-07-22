@@ -81,14 +81,12 @@
 
 <ul>
 	<c:forEach var="a" items="${listArticles}">
-		<div>
-			<li>${a.nomArticle}</li>
-			<li>${a.miseAPrix}</li>
-			<li>${a.dateFinEncheres}</li>
-			<li>${a.vendeur}</li>
-			<li>${listMontantMax}</li>
-			<li>${listPseudoVendeur}</li>
-		</div>
+		<li>${a.nomArticle}</li>
+		<li>${a.miseAPrix}</li>
+		<li>${a.dateFinEncheres}</li>
+		<li>${a.vendeur}</li>
+		<li>${listMontantMax}</li>
+		<li>${listPseudoVendeur}</li>
 		</br>
 	</c:forEach>
 </ul>

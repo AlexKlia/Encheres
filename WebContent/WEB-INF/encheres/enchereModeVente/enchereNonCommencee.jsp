@@ -1,25 +1,5 @@
 <%@ include file="../../fragment/entete.jspf"%>
 
-<% 
-	// Déclarations des variables
-	String rue = (String) request.getAttribute("rue");
-	String codePostal = (String) request.getAttribute("codePostal");
-	String ville = (String) request.getAttribute("ville");
-	String article = (String) request.getAttribute("article");
-	String description = (String) request.getAttribute("description");
-	String categorie = (String) request.getAttribute("categorie");
-	String miseAPrix = (String) request.getAttribute("miseAPrix");
-	String debut = (String) request.getAttribute("debut");
-	String fin = (String) request.getAttribute("fin");
-	String id = (String) request.getAttribute("id");
-	String errorMessages[] = (String[]) request.getAttribute("errorMessages");
-	String alertClass = (String) request.getAttribute("alertClass");
-	Boolean deleteSuccess = (Boolean) request.getAttribute("deleteSuccess");
-	Boolean addSuccess = (Boolean) request.getAttribute("addSuccess");
-	Boolean updateSuccess = (Boolean) request.getAttribute("updateSuccess");
-	Boolean isCancellable = (Boolean) request.getAttribute("isCancellable");
-%>
-
 <c:if test="${deleteSuccess || addSuccess || updateSuccess || cancelSuccess || null != errorMessages}">
 	<div class="row justify-content-md-center">
 		<div class="col col-lg-6 text-center font-weight-bold">
