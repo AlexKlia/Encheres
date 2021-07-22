@@ -2,6 +2,7 @@ package fr.eni.encheres.bo;
 
 public class Retrait {
 
+	private Integer noArticle;
 	private String rue;
 	private String codePostal;
 	private String ville;
@@ -9,10 +10,19 @@ public class Retrait {
 	public Retrait() {
 	}
 
-	public Retrait(String rue, String codePostal, String ville) {
+	public Retrait(Integer noArticle, String rue, String codePostal, String ville) {
+		this.setNoArticle(noArticle);
 		this.setRue(rue);
 		this.setCodePostal(codePostal);
 		this.setVille(ville);
+	}
+
+	public Integer getNoArticle() {
+		return noArticle;
+	}
+
+	public void setNoArticle(int noArticle) {
+		this.noArticle = noArticle;
 	}
 
 	public String getRue() {
@@ -41,7 +51,7 @@ public class Retrait {
 
 	@Override
 	public String toString() {
-		return "Retrait [rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
+		return "Retrait [noArticle=" + noArticle + ", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
 	}
 	
 }

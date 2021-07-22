@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleManager;
+import fr.eni.encheres.bll.RetraitManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
@@ -30,8 +31,9 @@ import fr.eni.encheres.dal.DALException;
 public class ServletEnchereModeVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Utilisateur user = null;
-	private UtilisateurManager um = new UtilisateurManager();	
-	private ArticleManager am = new ArticleManager();	
+	private UtilisateurManager um = new UtilisateurManager();
+	private ArticleManager am = new ArticleManager();
+	private RetraitManager rm = new RetraitManager();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,6 +55,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 					if (null != request.getAttribute("noArticle")) {
 						int articleId = Integer.parseInt(request.getAttribute("noArticle").toString());
 						Article article = am.getArticleById(articleId);
+						Retrait retrait = rm.getRetraitById(articleId);
 
 						// Informations article
 						Object noUtilisateur = session.getAttribute("noUtilisateur");
@@ -65,12 +68,21 @@ public class ServletEnchereModeVente extends HttpServlet {
 						request.setAttribute("debut", article.getDateDebutEncheres().toString());
 						request.setAttribute("fin", article.getDateFinEncheres().toString());
 						request.setAttribute("isCancellable", article.getDateDebutEncheres().isAfter(LocalDate.now()) && user.noUtilisateur == article.getVendeur().getNoUtilisateur());
+						
+						
+						if (null != retrait) {
+							request.setAttribute("rue", retrait.getRue());
+							request.setAttribute("codePostal", String.valueOf(retrait.getCodePostal()));
+							request.setAttribute("ville", retrait.getVille());
+						} else {
+							// Informations user
+							request.setAttribute("rue", user.getRue());
+							request.setAttribute("codePostal", String.valueOf(user.getCodePostal()));
+							request.setAttribute("ville", user.getVille());
+						}
 					}
 
-					// Informations user
-					request.setAttribute("rue", user.getRue());
-					request.setAttribute("codePostal", String.valueOf(user.getCodePostal()));
-					request.setAttribute("ville", user.getVille());
+					
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -86,21 +98,26 @@ public class ServletEnchereModeVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Article article = null;
+		Retrait retrait = null;
+		Categorie categorie = new Categorie();
 		String requestNoArticle = request.getParameter("noArticle");
 		boolean isDeleteButton = request.getParameter("submitButton").equals("delete");
 		boolean isCancelButton = request.getParameter("submitButton").equals("cancel");
 		boolean articleAlreadyExist = null != requestNoArticle && !requestNoArticle.equals("");
+		Integer noArticle = articleAlreadyExist ? Integer.parseInt(requestNoArticle) : null;
 		
 		// On recherche l'article si un id est passé en parametre de la requete pour le mettre a jour
 		if (articleAlreadyExist) {
 			try {
-				article = am.getArticleById(Integer.parseInt(requestNoArticle));
+				article = am.getArticleById(noArticle);
+				retrait = rm.getRetraitById(noArticle);
 			} catch (NumberFormatException | DALException e) {
 				e.printStackTrace();
 			}
 		} else {
 			// Sinon on ajoute un nouvelle article
 			article = new Article();
+			retrait = new Retrait();
 		}
 					
 		// On verifie l'action qu'on veux effectuer: suppression, ajout ou modification.
@@ -108,6 +125,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 			// Suppression de l'article
 			if (LocalDate.now().isBefore(article.getDateDebutEncheres())) {
 				try {
+					rm.remove(Integer.parseInt(requestNoArticle));
 					am.remove(Integer.parseInt(requestNoArticle));
 					request.setAttribute("deleteSuccess", true);
 					request.setAttribute("alertClass", "info");
@@ -124,8 +142,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 				if (!request.getParameter("miseAPrix").equals("")) {
 					article.setMiseAPrix(Integer.parseInt(request.getParameter("miseAPrix")));	
 				}
-				
-				Categorie categorie = new Categorie();
+
 				categorie.setNoCategorie(Integer.parseInt(request.getParameter("categorie")));
 				article.setCategorie(categorie);
 				
@@ -138,8 +155,11 @@ public class ServletEnchereModeVente extends HttpServlet {
 				if (!finEnchere.equals("")) {
 					article.setDateFinEncheres(LocalDate.parse(finEnchere));
 				}
-				
-				Retrait retrait = new Retrait();
+
+				if (articleAlreadyExist) {
+					retrait.setNoArticle(noArticle);
+				}
+
 				retrait.setRue(request.getParameter("rue"));
 				retrait.setCodePostal(request.getParameter("codePostal"));
 				retrait.setVille(request.getParameter("ville"));
@@ -156,9 +176,12 @@ public class ServletEnchereModeVente extends HttpServlet {
 					request.setAttribute("alertClass", "success");
 					if (null != article.getNoArticle()) {
 						am.update(article);
+						rm.update(retrait);
 						request.setAttribute("updateSuccess", true);
 					} else {
-						am.add(article);
+						noArticle = am.add(article);
+						retrait.setNoArticle(noArticle);
+						rm.add(retrait);
 						request.setAttribute("addSuccess", true);
 					}
 				}
@@ -169,8 +192,7 @@ public class ServletEnchereModeVente extends HttpServlet {
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			
-			Integer noArticle = null == article ? null : article.getNoArticle();
+
 			if (null != noArticle) {
 				request.setAttribute("noArticle", noArticle);
 			}
