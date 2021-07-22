@@ -28,7 +28,7 @@ public class UtilisateurManager {
 
 	public Utilisateur add(Utilisateur utilisateur) throws DALException, BusinessException {
 		BusinessException businessException = new BusinessException();
-		this.validation(utilisateur, businessException);
+		validation(utilisateur, businessException);
 
 		if (!businessException.hasErreurs()) {
 			return utilisateurDAO.insert(utilisateur);
@@ -63,6 +63,8 @@ public class UtilisateurManager {
 	}
 
 	private void validation(Utilisateur utilisateur, BusinessException businessException) {
+		System.out.println("test");
+		
 		if (utilisateur.getPseudo() == null || utilisateur.getPseudo().equals("")) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_NULL,
 					"Le pseudo est obligatoire.");
@@ -141,6 +143,27 @@ public class UtilisateurManager {
 						"Mot de passe trop long.");
 			}
 		}
+		//Initialisation du crédit de l'utilisateur à 0
+		utilisateur.setCredit(0);
 
+		//Verification mot de passe
+		System.out.println(utilisateur.getMotDePasse());
+		System.out.println(utilisateur.getMotDePasseConfirmation());
+		if (utilisateur.getMotDePasse() != null && utilisateur.getMotDePasseConfirmation() != null) {
+			if (!utilisateur.getMotDePasse().equals(utilisateur.getMotDePasseConfirmation())) {
+				businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_MOT_DE_PASSE_ERREUR_CONFIRMATION,
+						"Les mots de passe entrés sont differents.");
+				
+			}
+			
+		//Verification du pseudo en caractères alphanumériques
+		if(utilisateur.getPseudo() != null && !utilisateur.getPseudo().matches("^[a-zA-Z0-9]*$")) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEUR_PSEUDO_ALPHANUMERIQUE,
+					"Le pseudo doit uniquement contenir des caractères alphanumériques ((A à Z) (0 à 9)");
+		}
+		
+		}
 	}
+	
+	
 }

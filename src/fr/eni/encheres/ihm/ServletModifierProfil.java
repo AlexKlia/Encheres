@@ -84,13 +84,25 @@ public class ServletModifierProfil extends HttpServlet {
 
 			try {
 				utilisateurManager.update(utilisateuraModifier);
+				request.setAttribute("pseudo", pseudo);
+				request.setAttribute("nom", nom);
+				request.setAttribute("prenom", prenom);
+				request.setAttribute("email", email);
+				request.setAttribute("tel", tel);
+				request.setAttribute("rue", rue);
+				request.setAttribute("codePostal", codePostal);
+				request.setAttribute("ville", ville);
+				request.setAttribute("mdp", mdp);
+				request.setAttribute("creditInt", creditInt);
 
 			} catch (DALException e) {
 
 				e.printStackTrace();
 			}
 
-			doGet(request, response);
+			//Redirection vers la page
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
+			rd.forward(request, response);
 		}
 		if (isDeleteButton) {
 			HttpSession session = request.getSession();

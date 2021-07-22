@@ -21,10 +21,6 @@ import fr.eni.encheres.dal.DALException;
 public class ServletCreerCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/creerCompte.jsp");
@@ -54,23 +50,27 @@ public class ServletCreerCompte extends HttpServlet {
 			String codePostal = request.getParameter("codePostal");
 			String ville = request.getParameter("ville");
 			String motDePasse = request.getParameter("mdp");
+			String motDePasseConfirmation = request.getParameter("mdpC");
 
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur utilisateuraAjouter = new Utilisateur(pseudo, nom, prenom, email, tel, rue, codePostal, ville,
-					motDePasse);
+					motDePasse,motDePasseConfirmation);
 			Utilisateur utilsateurRenvoye = null;
+
 			try {
+
 				utilsateurRenvoye = utilisateurManager.add(utilisateuraAjouter);
+
 			} catch (DALException e) {
 
 				e.printStackTrace();
 			} catch (BusinessException e) {
-
-				e.printStackTrace();
+				String[] errorMessages = e.getErrorMessages();
+				request.setAttribute("errorMessages", errorMessages);
 			}
 
 			if (utilsateurRenvoye != null) {
-				//Redirection vers la page d'accueil
+				// Redirection vers la page d'accueil
 				response.sendRedirect(request.getContextPath());
 			} else {
 				String erreurCreation = "Compte utilisateur non crée, renseigner à nouveau les champs";
@@ -89,4 +89,5 @@ public class ServletCreerCompte extends HttpServlet {
 		}
 
 	}
+
 }

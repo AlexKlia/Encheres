@@ -16,6 +16,7 @@ public class Utilisateur {
 	public String motDePasse;
 	public int credit;
 	public boolean administrateur;
+	public String motDePasseConfirmation;
 	
 
 	public Utilisateur() {
@@ -103,9 +104,25 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 	}
+	
+	
 
 	
 	
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, String motDePasseConfirmation) {
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.motDePasseConfirmation = motDePasseConfirmation;
+	}
+
 	public Utilisateur(int noUtilisateur) {
 		this.noUtilisateur = noUtilisateur;
 	}
@@ -181,6 +198,15 @@ public class Utilisateur {
 	}
 	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
+	}
+
+	
+	public String getMotDePasseConfirmation() {
+		return motDePasseConfirmation;
+	}
+
+	public void setMotDePasseConfirmation(String motDePasseConfirmation) {
+		this.motDePasseConfirmation = motDePasseConfirmation;
 	}
 
 	@Override

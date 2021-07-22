@@ -12,7 +12,7 @@
 
 
 <div class="d-flex justify-content-center align-items-center container ">
-	<form action="<%=request.getContextPath()%>/ServletConnexion"
+	<form id="myform" action="<%=request.getContextPath()%>/ServletConnexion"
 		method="post">
 		<div class="row mt-5">
 			<div class="col-12">

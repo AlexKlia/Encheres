@@ -63,6 +63,7 @@ public class ServletProfil extends HttpServlet {
 		if (isUpdateButton) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/encheres/enchereUtilisateur/modifierProfil.jsp");
 			rd.forward(request, response);
+			
 		}
 		if (isCancelButton) {
 			//Redirection vers la page d'accueil

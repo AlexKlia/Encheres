@@ -82,4 +82,8 @@ public class CodesResultatBLL {
 	
 	public static final int REGLE_UTILISATEUR_MOT_DE_PASSE_ERREUR=20025;
 	
+	public static final int REGLE_UTILISATEUR_MOT_DE_PASSE_ERREUR_CONFIRMATION=20026;
+	
+	public static final int REGLE_UTILISATEUR_PSEUDO_ALPHANUMERIQUE=20027;
+	
 }
