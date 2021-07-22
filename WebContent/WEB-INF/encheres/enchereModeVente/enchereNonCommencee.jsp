@@ -62,8 +62,10 @@
 				<label for="categorie" class="col-sm-3 col-form-label">Catégorie :</label>
 				<div class="col-sm-8">
 					<select id="categorie" class="form-control" name="categorie">
-						<option value="1" ${categorie.equals('1') ? 'selected' : ''}>Maison</option>
-						<option value="2" ${categorie.equals('2') ? 'selected' : ''}>Exterieur</option>
+						<option value="1" ${categorie.equals('1') ? 'selected' : ''}>Informatique</option>
+						<option value="2" ${categorie.equals('2') ? 'selected' : ''}>Ameubleument</option>
+						<option value="3" ${categorie.equals('3') ? 'selected' : ''}>Vetement</option>
+						<option value="4" ${categorie.equals('4') ? 'selected' : ''}>Sport&Loisirs</option>
 					</select>
 				</div>
 			</div>
