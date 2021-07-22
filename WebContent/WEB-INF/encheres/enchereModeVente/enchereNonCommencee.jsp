@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../fragment/entete.jspf"%>
 
 <c:if test="${deleteSuccess || addSuccess || updateSuccess || cancelSuccess || null != errorMessages}">
@@ -6,11 +7,11 @@
 			<div class="alert alert-${alertClass}" role="alert">
 				<c:choose>
 					<c:when test="${deleteSuccess}">
-			  			La vente a �t� annul�e avec succ�s.
+			  			La vente a été annulée avec succès.
 			        </c:when>
 			        
 			        <c:when test="${addSuccess}">
-					  	La vente a �t� cr�ee avec succ�s.
+					  	La vente a été créee avec succès.
 			        </c:when>
 			        
 			        <c:when test="${null != errorMessages}">
@@ -22,11 +23,11 @@
 			        </c:when>
 			        
 			        <c:when test="${updateSuccess}">
-					  	La vente a �t� modifi�e avec succ�s.
+					  	La vente a été modifiée avec succï¿½s.
 			        </c:when>
 												
 			        <c:otherwise>
-						Les modifications ont �t� annul�es.
+						Les modifications ont été annulées.
 			        </c:otherwise>
 				</c:choose>
 			</div>
@@ -58,7 +59,7 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="categorie" class="col-sm-3 col-form-label">Cat�gorie :</label>
+				<label for="categorie" class="col-sm-3 col-form-label">Catégorie :</label>
 				<div class="col-sm-8">
 					<select id="categorie" class="form-control" name="categorie">
 						<option value="1" ${categorie.equals('1') ? 'selected' : ''}>Maison</option>
@@ -79,14 +80,14 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="miseAPrix" class="col-sm-3 col-form-label">Mise � prix :</label>
+				<label for="miseAPrix" class="col-sm-3 col-form-label">Mise à prix :</label>
 				<div class="col-sm-8">
 					<input type="number" class="form-control" id="miseAPrix" name="miseAPrix" value="${miseAPrix}">
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="debutEnchere" class="col-sm-3 col-form-label">D�but de l'enchere :</label>
+				<label for="debutEnchere" class="col-sm-3 col-form-label">Début de l'enchere :</label>
 				<div class="col-sm-8">
 					<input type="date" class="form-control" id="debutEnchere" name="debutEnchere" value="${debut}">
 				</div>
