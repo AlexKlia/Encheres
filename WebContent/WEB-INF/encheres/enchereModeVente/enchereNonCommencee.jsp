@@ -61,21 +61,21 @@
 			<div class="form-group row">
 				<label for="article" class="col-sm-3 col-form-label">Article :</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="article" name="article" placeholder="Nom de l'article" value="${article}" ${!isVendeurArticle ? 'readonly' : null}>
+					<input type="text" class="form-control" id="article" name="article" placeholder="Nom de l'article" value="${article}">
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="description" class="col-sm-3 col-form-label">Description :</label>
 				<div class="col-sm-8">
-					<textarea rows="4" class="form-control" id="description" name="description" ${!isVendeurArticle ? 'readonly' : null}>${description}</textarea>
+					<textarea rows="4" class="form-control" id="description" name="description">${description}</textarea>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="categorie" class="col-sm-3 col-form-label">Catégorie :</label>
 				<div class="col-sm-8">
-					<select id="categorie" class="form-control" name="categorie" ${!isVendeurArticle ? 'readonly' : null}>
+					<select id="categorie" class="form-control" name="categorie">
 						<option value="1" ${categorie.equals('1') ? 'selected' : ''}>Informatique</option>
 						<option value="2" ${categorie.equals('2') ? 'selected' : ''}>Ameubleument</option>
 						<option value="3" ${categorie.equals('3') ? 'selected' : ''}>Vetement</option>
@@ -100,21 +100,21 @@
 			<div class="form-group row">
 				<label for="miseAPrix" class="col-sm-3 col-form-label">Mise à prix :</label>
 				<div class="col-sm-8">
-					<input type="number" class="form-control" id="miseAPrix" name="miseAPrix" value="${miseAPrix}" ${!isVendeurArticle ? 'readonly' : null}>
+					<input type="number" class="form-control" id="miseAPrix" name="miseAPrix" value="${miseAPrix}">
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="debutEnchere" class="col-sm-3 col-form-label">Début de l'enchere :</label>
 				<div class="col-sm-8">
-					<input type="date" class="form-control" id="debutEnchere" name="debutEnchere" value="${debut}" ${!isVendeurArticle ? 'readonly' : null}>
+					<input type="date" class="form-control" id="debutEnchere" name="debutEnchere" value="${debut}">
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="finEnchere" class="col-sm-3 col-form-label">Fin de l'enchere :</label>
 				<div class="col-sm-8">
-					<input type="date" class="form-control" id="finEnchere" name="finEnchere" value="${fin}" ${!isVendeurArticle ? 'readonly' : null}>
+					<input type="date" class="form-control" id="finEnchere" name="finEnchere" value="${fin}">
 				</div>
 			</div>
 
@@ -124,28 +124,28 @@
 				<div class="form-group row">
 					<label for="rue" class="col-sm-3 col-form-label">Rue :</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" id="rue" name="rue" value="${rue}" ${!isVendeurArticle ? 'readonly' : null}>
+						<input type="text" class="form-control" id="rue" name="rue" value="${rue}">
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label for="codePostal" class="col-sm-3 col-form-label">Code postal :</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" id="codePostal" name="codePostal" value="${codePostal}" ${!isVendeurArticle ? 'readonly' : null}>
+						<input type="text" class="form-control" id="codePostal" name="codePostal" value="${codePostal}">
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label for="ville" class="col-sm-3 col-form-label">Ville :</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" id="ville" name="ville" value="${ville}" ${!isVendeurArticle ? 'readonly' : null}>
+						<input type="text" class="form-control" id="ville" name="ville" value="${ville}">
 					</div>
 				</div>
 			</fieldset>
 
 			<input type="hidden" id="noArticle" name="noArticle" value="${id}">
 
-			<c:if test="${isVendeurArticle}">
+			<c:if test="${null == id || isVendeurArticle}">
 				<button type="submit" name="submitButton" value="add" class="btn btn-lg btn-outline-dark mr-5">Enregistrer</button>
 				<button type="submit" name="submitButton" value="cancel" class="btn btn-lg btn-outline-secondary">Annuler</button>
 				<c:if test="${isCancellable}">
